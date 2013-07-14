@@ -1,0 +1,30 @@
+{
+    "name" : "lp/sdk-server-php",
+    "type" : "library",
+    "description" : "Little Postman Server SDK for PHP",
+    "keywords" : ["little postman", "push notifications", "push", "sdk"],
+    "homepage" : "http://github.com/littlepostman/sdk-server-php",
+    "license" : "",
+    "authors" : [
+        {
+            "name" : "Carsten D. Decker",
+            "email" : "carsten@littlepostman.com",
+            "homepage" : "http://www.littlepostman.com",
+            "role" : "Developer"
+        },
+        {
+            "name" : "Tobias Fonfara",
+            "email" : "tobias@littlepostman.com",
+            "homepage" : "http://www.littlepostman.com",
+            "role" : "Developer"
+        }
+    ],
+    "require" : {
+        "php" : ">=5.3.0"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "lp" : "src"
+        }
+    }
+}
