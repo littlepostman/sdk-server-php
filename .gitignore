@@ -9,3 +9,4 @@ nbproject
 .vagrant
 composer.lock
 vendor/bin
+desktop.ini

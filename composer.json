@@ -1,5 +1,5 @@
 {
-    "name" : "lp/sdk-server-php",
+    "name" : "littlepostman/sdk-server-php",
     "type" : "library",
     "description" : "Little Postman Server SDK for PHP",
     "keywords" : ["little postman", "push notifications", "push", "sdk"],
@@ -15,6 +15,17 @@
         {
             "name" : "Tobias Fonfara",
             "email" : "tobias@littlepostman.com",
+            "homepage" : "http://www.littlepostman.com",
+            "role" : "Developer"
+        },
+        {
+            "name" : "Krasimir Krastev",
+            "email" : "krasimir@littlepostman.com",
+            "homepage" : "http://www.littlepostman.com",
+            "role" : "Developer"
+        },
+        {
+            "name" : "Ben Broll",
             "homepage" : "http://www.littlepostman.com",
             "role" : "Developer"
         }
