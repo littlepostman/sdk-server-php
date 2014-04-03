@@ -346,11 +346,9 @@ class Lp_RPC_Model_MessageStatus
     /**
      * as a percentage
      *
-     * @param string $platform
-     *
      * @return float
      */
-    public function getResponseRate($platform = '')
+    public function getResponseRate()
     {
         $deviceCount = 0;
         $responses = 0;
@@ -359,7 +357,7 @@ class Lp_RPC_Model_MessageStatus
             if ($this->isDeviceEnvironment($key)) {
                 foreach ($allDeviceTypesStatistics as $deviceTypeStatistics) {
                     $deviceCount += $deviceTypeStatistics['deviceCount'];
-                    $responses += $deviceTypeStatistics['responses'];
+                    $responses += (isset($deviceTypeStatistics['responses']) ? $deviceTypeStatistics['responses'] : 0);
                 }
             }
         }
