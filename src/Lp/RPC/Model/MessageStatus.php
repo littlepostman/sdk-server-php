@@ -42,9 +42,9 @@ class Lp_RPC_Model_MessageStatus
     protected $_recipients;
 
     /**
-     * @var string $_sendAt
+     * @var string $_schedule
      */
-    protected $_sendAt;
+    protected $_schedule;
 
     /**
      * @var string $_sendUntil
@@ -157,11 +157,11 @@ class Lp_RPC_Model_MessageStatus
     }
 
     /**
-     * @param string $sendAt
+     * @param string $schedule
      */
-    public function setSendAt ($sendAt)
+    public function setSendAt ($schedule)
     {
-        $this->_sendAt = $sendAt;
+        $this->_schedule = $schedule;
     }
 
     /**
@@ -169,7 +169,7 @@ class Lp_RPC_Model_MessageStatus
      */
     public function getSendAt ()
     {
-        return $this->_sendAt;
+        return $this->_schedule;
     }
 
     /**
@@ -279,6 +279,11 @@ class Lp_RPC_Model_MessageStatus
     private function _formatDateString($dateTime)
     {
         if ($dateTime != null) {
+            // is it in mysql date format? (we otherwise assume it's a UNIX timestamp)
+            if (preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $dateTime)) {
+                $dateTime = strtotime($dateTime);
+            }
+
             return date('d M Y H:i:s', $dateTime);
         } else {
             return '';
