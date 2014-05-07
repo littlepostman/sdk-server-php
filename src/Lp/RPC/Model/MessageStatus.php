@@ -15,6 +15,8 @@ class Lp_RPC_Model_MessageStatus
     const MESSAGE_STATUS_SCHEDULED = 'scheduled';
     const MESSAGE_STATUS_SENDING   = 'sending';
     const MESSAGE_STATUS_SENT      = 'sent';
+    const MESSAGE_STATUS_ERROR     = 'error';
+
 
     /**
      * @var int $_id
@@ -55,6 +57,7 @@ class Lp_RPC_Model_MessageStatus
      * @var array $_statistics
      */
     protected $_statistics;
+
 
     /**
      * @param array $object
