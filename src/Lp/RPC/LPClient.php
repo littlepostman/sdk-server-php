@@ -15,7 +15,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.17';
+    const LP_API_VERSION = '1.0.20';
 
     /**
      * @const LP_SERVER_PRODUCTION
@@ -349,6 +349,25 @@ class Lp_RPC_LPClient
         try {
 
             $params = $this->_jsonHandler->prepareDeviceSetDataCall($device, $data);
+            $result = $this->_invoke('device', array($params));
+            $this->_validate($result);
+
+        } catch (Exception $e) {
+            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+        }
+    }
+
+    /**
+     * @param Lp_RPC_Model_Device $device
+     * @param string              $eventType
+     *
+     * @throws Exception
+     */
+    public function registerDeviceEvent ($device, $eventType)
+    {
+        try {
+
+            $params = $this->_jsonHandler->prepareDeviceRegisterEventCall($device, $eventType);
             $result = $this->_invoke('device', array($params));
             $this->_validate($result);
 

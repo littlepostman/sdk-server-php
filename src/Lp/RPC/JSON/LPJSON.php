@@ -99,6 +99,23 @@ class Lp_RPC_JSON_LPJSON
 
     /**
      * @param Lp_RPC_Model_Device $device
+     * @param string              $eventType
+     *
+     * @return array
+     */
+    public function prepareDeviceRegisterEventCall ($device, $eventType)
+    {
+        $params         = array();
+        $params['env']  = $device->getEnvironment();
+        $params['type'] = $device->getType();
+        $params['uid']  = $device->getUid();
+        $params['eventType'] = $eventType;
+
+        return $this->prepare('event', $params);
+    }
+
+    /**
+     * @param Lp_RPC_Model_Device $device
      * @param array               $data
      *
      * @return array
