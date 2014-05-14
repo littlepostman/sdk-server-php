@@ -11,17 +11,27 @@ class Lp_RPC_Model_DeviceFilter
     const CRITERIA_OPERATOR_LTEQ       = 'LTEQ';
     const CRITERIA_OPERATOR_CONTAIN    = 'CONTAIN';
     const CRITERIA_OPERATOR_NOTCONTAIN = 'NOTCONTAIN';
+    const CRITERIA_OPERATOR_BEFORE     = 'BEFORE';
+    const CRITERIA_OPERATOR_NOTBEFORE  = 'NOTBEFORE';
 
     /**
      * @var array
      */
     public static $CRITERIA_OPERATORS = array(
-        self::CRITERIA_OPERATOR_EQ => '=',
-        self::CRITERIA_OPERATOR_NEQ => '!=',
-        self::CRITERIA_OPERATOR_GT => '>',
+        self::CRITERIA_OPERATOR_EQ   => '=',
+        self::CRITERIA_OPERATOR_NEQ  => '!=',
+        self::CRITERIA_OPERATOR_GT   => '>',
         self::CRITERIA_OPERATOR_GTEQ => '>=',
-        self::CRITERIA_OPERATOR_LT => '<',
+        self::CRITERIA_OPERATOR_LT   => '<',
         self::CRITERIA_OPERATOR_LTEQ => '<=',
+    );
+
+    /**
+     * @var array
+     */
+    public static $CRITERIA_TIME_OPERATORS = array(
+        self::CRITERIA_OPERATOR_BEFORE    => 'not within the last',
+        self::CRITERIA_OPERATOR_NOTBEFORE => 'within the last',
     );
 
     /**
@@ -49,7 +59,7 @@ class Lp_RPC_Model_DeviceFilter
      * @param string $name
      * @param string $criteria
      */
-    public function __construct ($id, $name, $criteria)
+    public function __construct($id, $name, $criteria)
     {
         $this->id       = $id;
         $this->name     = $name;
@@ -59,7 +69,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @return int
      */
-    public function getId ()
+    public function getId()
     {
         return (int) $this->id;
     }
@@ -67,7 +77,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @param int $id
      */
-    public function setId ($id)
+    public function setId($id)
     {
         $this->id = (int) $id;
     }
@@ -75,7 +85,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @return string
      */
-    public function getName ()
+    public function getName()
     {
         return $this->name;
     }
@@ -83,7 +93,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @param string $name
      */
-    public function setName ($name)
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -91,7 +101,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @return array
      */
-    public function getCriteria ()
+    public function getCriteria()
     {
         return json_decode($this->criteria, true);
     }
@@ -99,7 +109,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @param array $criteria
      */
-    public function setCriteria ($criteria)
+    public function setCriteria($criteria)
     {
         $this->criteria = json_encode($criteria);
     }
@@ -109,7 +119,7 @@ class Lp_RPC_Model_DeviceFilter
      *
      * @return array
      */
-    public function getCriteriaItemByUid ($uid)
+    public function getCriteriaItemByUid($uid)
     {
         foreach ($this->getCriteria() as $item) {
             if ($item['uid'] === $uid) {
@@ -123,7 +133,7 @@ class Lp_RPC_Model_DeviceFilter
      * @param string $uid
      * @param array  $data
      */
-    public function setCriteriaItemByUid ($uid, $data)
+    public function setCriteriaItemByUid($uid, $data)
     {
         $data['uid'] = $uid;
         $criteria    = $this->getCriteria();
@@ -138,7 +148,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @param string $uid
      */
-    public function deleteCriteriaItemByUid ($uid)
+    public function deleteCriteriaItemByUid($uid)
     {
         $criteria = $this->getCriteria();
         foreach ($criteria as $index => $item) {
@@ -155,7 +165,7 @@ class Lp_RPC_Model_DeviceFilter
      *
      * @return string
      */
-    public function insertCriteriaItemAndGetUid ($data)
+    public function insertCriteriaItemAndGetUid($data)
     {
         $data['uid'] = uniqid();
         $criteria    = $this->getCriteria();
@@ -167,7 +177,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @return int|null
      */
-    public function getCalcDevicesTotal ()
+    public function getCalcDevicesTotal()
     {
         return $this->calcDevicesTotal;
     }
@@ -175,7 +185,7 @@ class Lp_RPC_Model_DeviceFilter
     /**
      * @param int|null $value
      */
-    public function setCalcDevicesTotal ($value = null)
+    public function setCalcDevicesTotal($value = null)
     {
         $this->calcDevicesTotal = $value;
     }
