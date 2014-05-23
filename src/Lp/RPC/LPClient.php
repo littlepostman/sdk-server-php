@@ -435,6 +435,46 @@ class Lp_RPC_LPClient
     }
 
     /**
+     * @param string $tokenType
+     *
+     * @throws Exception
+     */
+    public function generateToken($tokenType)
+    {
+        try {
+
+            $params = $this->_jsonHandler->prepareGenerateTokenCall($tokenType);
+            $result = $this->_invoke('token', array($params));
+            $this->_validate($result);
+
+        } catch (Exception $e) {
+            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+        }
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function getImports($offset = 0, $limit = 100)
+    {
+        try {
+
+            $params = $this->_jsonHandler->prepareImportListCall($offset, $limit);
+            $result = $this->_invoke('import', array($params));
+            $this->_validate($result);
+            return $this->_jsonHandler->parseImportListResult($result);
+
+        } catch (Exception $e) {
+            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+        }
+    }
+
+    /**
      * @param string $method
      * @param array  $params
      *
