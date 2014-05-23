@@ -362,6 +362,35 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param string $tokenType
+     *
+     * @return array
+     */
+    public function prepareGenerateTokenCall($tokenType)
+    {
+        $params              = array();
+        $params['tokenType'] = $tokenType;
+
+        return $this->prepare('generate', $params);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function prepareImportListCall ($offset, $limit)
+    {
+        $params               = array();
+        $params['offset']     = $offset;
+        $params['limit']      = $limit;
+
+        return $this->prepare('list', $params);
+    }
+
+
+    /**
      * @param array $object
      *
      * @return array array
@@ -572,6 +601,23 @@ class Lp_RPC_JSON_LPJSON
             }
         }
         return null;
+    }
+
+    /**
+     * @param array $object
+     *
+     * @return array
+     */
+    public static function parseImportListResult ($object)
+    {
+        $imports = array();
+        if (array_key_exists('result', $object)) {
+            if (array_key_exists('list', $object['result'])) {
+                $imports = $object['result']['list'][0];
+            }
+        }
+
+        return $imports;
     }
 
     /**
