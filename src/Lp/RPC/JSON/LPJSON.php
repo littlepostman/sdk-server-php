@@ -24,6 +24,12 @@ class Lp_RPC_JSON_LPJSON
 {
 
     /**
+     * @const string
+     */
+    const RPC_TOKEN_GENERATE = 'generate';
+
+
+    /**
      * @var string $_authKey
      */
     protected $_authKey;
@@ -618,6 +624,27 @@ class Lp_RPC_JSON_LPJSON
         }
 
         return $imports;
+    }
+
+
+    /**
+     * @param array $object
+     *
+     * @throws Exception
+     *
+     * @return string
+     */
+    public function parseGenerateTokenResult($object)
+    {
+        if (array_key_exists('result', $object)) {
+            if (isset($object['result'][self::RPC_TOKEN_GENERATE])) {
+                $token = $object['result'][self::RPC_TOKEN_GENERATE];
+
+                return $token;
+            }
+        }
+
+        throw new Exception('Unexpected exception occurred while parsing generateToken result', 0);
     }
 
     /**

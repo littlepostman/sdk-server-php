@@ -447,6 +447,7 @@ class Lp_RPC_LPClient
             $result = $this->_invoke('token', array($params));
             $this->_validate($result);
 
+            return $this->_jsonHandler->parseGenerateTokenResult($result);
         } catch (Exception $e) {
             throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
         }
