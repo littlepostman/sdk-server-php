@@ -15,7 +15,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.22';
+    const LP_API_VERSION = '1.0.23';
 
     /**
      * @const LP_SERVER_PRODUCTION
@@ -447,6 +447,7 @@ class Lp_RPC_LPClient
             $result = $this->_invoke('token', array($params));
             $this->_validate($result);
 
+            return $this->_jsonHandler->parseGenerateTokenResult($result);
         } catch (Exception $e) {
             throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
         }
