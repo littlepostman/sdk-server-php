@@ -15,7 +15,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.23';
+    const LP_API_VERSION = '1.0.24';
 
     /**
      * @const LP_SERVER_PRODUCTION
