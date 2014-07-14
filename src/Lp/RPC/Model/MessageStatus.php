@@ -10,12 +10,13 @@ require_once(realpath(dirname(__FILE__) . '/DeviceEnvironment.php'));
 class Lp_RPC_Model_MessageStatus
 {
 
-    const MESSAGE_STATUS_DRAFT     = 'draft';
-    const MESSAGE_STATUS_PREPARING = 'preparing';
-    const MESSAGE_STATUS_SCHEDULED = 'scheduled';
-    const MESSAGE_STATUS_SENDING   = 'sending';
-    const MESSAGE_STATUS_SENT      = 'sent';
-    const MESSAGE_STATUS_ERROR     = 'error';
+    const MESSAGE_STATUS_DRAFT         = 'draft';
+    const MESSAGE_STATUS_PREPARING     = 'preparing';
+    const MESSAGE_STATUS_SCHEDULED     = 'scheduled';
+    const MESSAGE_STATUS_SENDING       = 'sending';
+    const MESSAGE_STATUS_SENT          = 'sent';
+    const MESSAGE_STATUS_ERROR         = 'error';
+    const MESSAGE_STATUS_PARTIAL_ERROR = 'partial error';
 
 
     /**
