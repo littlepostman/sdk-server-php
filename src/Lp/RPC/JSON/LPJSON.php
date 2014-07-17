@@ -37,7 +37,7 @@ class Lp_RPC_JSON_LPJSON
     /**
      * @param string $authKey
      */
-    public function __construct ($authKey)
+    public function __construct($authKey)
     {
         $this->_authKey = $authKey;
     }
@@ -49,7 +49,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepare ($function, $params, $isArray = false)
+    public function prepare($function, $params, $isArray = false)
     {
         if (!$isArray) {
             $params = array($params);
@@ -69,7 +69,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceListCall ($offset, $limit, $fieldSet)
+    public function prepareDeviceListCall($offset, $limit, $fieldSet)
     {
         $params           = array();
         $params['offset'] = $offset;
@@ -89,7 +89,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceRegisterCall ($device)
+    public function prepareDeviceRegisterCall($device)
     {
         $params                       = array();
         $params['env']                = $device->getEnvironment();
@@ -109,12 +109,12 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceRegisterEventCall ($device, $eventType)
+    public function prepareDeviceRegisterEventCall($device, $eventType)
     {
-        $params         = array();
-        $params['env']  = $device->getEnvironment();
-        $params['type'] = $device->getType();
-        $params['uid']  = $device->getUid();
+        $params              = array();
+        $params['env']       = $device->getEnvironment();
+        $params['type']      = $device->getType();
+        $params['uid']       = $device->getUid();
         $params['eventType'] = $eventType;
 
         return $this->prepare('event', $params);
@@ -126,7 +126,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceSetDataCall ($device, $data)
+    public function prepareDeviceSetDataCall($device, $data)
     {
         $params         = array();
         $params['env']  = $device->getEnvironment();
@@ -139,10 +139,29 @@ class Lp_RPC_JSON_LPJSON
 
     /**
      * @param Lp_RPC_Model_Device $device
+     * @param int $offset
+     * @param int $limit
      *
      * @return array
      */
-    public function prepareDeviceUnregisterCall ($device)
+    public function prepareDeviceMessageInboxCall($device, $offset, $limit)
+    {
+        $params           = array();
+        $params['env']    = $device->getEnvironment();
+        $params['type']   = $device->getType();
+        $params['uid']    = $device->getUid();
+        $params['offset'] = $offset;
+        $params['limit']  = $limit;
+
+        return $this->prepare('messageInbox', $params);
+    }
+
+    /**
+     * @param Lp_RPC_Model_Device $device
+     *
+     * @return array
+     */
+    public function prepareDeviceUnregisterCall($device)
     {
         $params         = array();
         $params['env']  = $device->getEnvironment();
@@ -157,7 +176,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceFilterCreateCall ($deviceFilter)
+    public function prepareDeviceFilterCreateCall($deviceFilter)
     {
         $params             = array();
         $params['id']       = $deviceFilter->getId();
@@ -172,7 +191,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceFilterDeleteCall ($id)
+    public function prepareDeviceFilterDeleteCall($id)
     {
         $params       = array();
         $params['id'] = $id;
@@ -185,7 +204,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceFilterCalcCriteriaCall ($deviceFilters)
+    public function prepareDeviceFilterCalcCriteriaCall($deviceFilters)
     {
         $params = array();
 
@@ -203,7 +222,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceFilterListCall ($offset, $limit)
+    public function prepareDeviceFilterListCall($offset, $limit)
     {
         $params           = array();
         $params['offset'] = $offset;
@@ -217,7 +236,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceFilterUpdateCall ($deviceFilter)
+    public function prepareDeviceFilterUpdateCall($deviceFilter)
     {
         $params             = array();
         $params['id']       = $deviceFilter->getId();
@@ -232,7 +251,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareFieldCreateCall ($field)
+    public function prepareFieldCreateCall($field)
     {
         $params                    = array();
         $params['name']            = $field->getName();
@@ -247,7 +266,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareFieldListCall ($offset, $limit)
+    public function prepareFieldListCall($offset, $limit)
     {
         $params           = array();
         $params['offset'] = $offset;
@@ -261,7 +280,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareMessageDetailsCall ($messageIds)
+    public function prepareMessageDetailsCall($messageIds)
     {
         $params = array();
 
@@ -278,7 +297,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareMessageListCall ($offset, $limit)
+    public function prepareMessageListCall($offset, $limit)
     {
         $params               = array();
         $params['offset']     = $offset;
@@ -296,7 +315,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function preparePushSendCall ($message, $type, $env, $fieldSetOrDeviceFilter)
+    public function preparePushSendCall($message, $type, $env, $fieldSetOrDeviceFilter)
     {
         $params            = array();
         $params['message'] = $this->buildPushSendMessageCreateArray($message);
@@ -326,7 +345,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareResponseUpdateCall ($device, $message)
+    public function prepareResponseUpdateCall($device, $message)
     {
         $params              = array();
         $params['messageId'] = $message->getId();
@@ -343,7 +362,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareStatisticsStatisticsCall ($startDate, $endDate)
+    public function prepareStatisticsStatisticsCall($startDate, $endDate)
     {
         $params              = array();
         $params['startDate'] = $startDate->format('Y-m-d');
@@ -358,7 +377,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareUserLoginCall ($email, $password)
+    public function prepareUserLoginCall($email, $password)
     {
         $params             = array();
         $params['email']    = $email;
@@ -386,11 +405,11 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareImportListCall ($offset, $limit)
+    public function prepareImportListCall($offset, $limit)
     {
-        $params               = array();
-        $params['offset']     = $offset;
-        $params['limit']      = $limit;
+        $params           = array();
+        $params['offset'] = $offset;
+        $params['limit']  = $limit;
 
         return $this->prepare('list', $params);
     }
@@ -401,7 +420,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array array
      */
-    public static function parseDeviceListResult ($object)
+    public static function parseDeviceListResult($object)
     {
         $list = array();
         if (array_key_exists('result', $object)) {
@@ -422,6 +441,7 @@ class Lp_RPC_JSON_LPJSON
                 }
             }
         }
+
         return $list;
     }
 
@@ -430,7 +450,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public static function parseDeviceFilterListResult ($object)
+    public static function parseDeviceFilterListResult($object)
     {
         $deviceFilters = array();
         if (array_key_exists('result', $object)) {
@@ -443,6 +463,7 @@ class Lp_RPC_JSON_LPJSON
                 }
             }
         }
+
         return $deviceFilters;
     }
 
@@ -452,7 +473,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public static function parseDeviceFilterCalcCriteriaResult ($deviceFilters, $object)
+    public static function parseDeviceFilterCalcCriteriaResult($deviceFilters, $object)
     {
         if (array_key_exists('result', $object)) {
             if (array_key_exists('calcCriteria', $object['result'])) {
@@ -468,6 +489,7 @@ class Lp_RPC_JSON_LPJSON
                 }
             }
         }
+
         return $deviceFilters;
     }
 
@@ -476,7 +498,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public static function parseError ($object)
+    public static function parseError($object)
     {
         $errors = array();
         if (array_key_exists('error', $object)) {
@@ -494,6 +516,7 @@ class Lp_RPC_JSON_LPJSON
                 }
             }
         }
+
         return $errors;
     }
 
@@ -502,7 +525,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public static function parseFieldListResult ($object)
+    public static function parseFieldListResult($object)
     {
         $fields = array();
         if (array_key_exists('result', $object)) {
@@ -510,12 +533,13 @@ class Lp_RPC_JSON_LPJSON
                 $list = $object['result']['list'];
                 foreach ($list as $array) {
                     foreach ($array as $value) {
-                        $descriptiveName = ! empty($value['descriptiveName']) ? $value['descriptiveName'] : '';
-                        $fields[] = new Lp_RPC_Model_Field($value['name'], $descriptiveName);
+                        $descriptiveName = !empty($value['descriptiveName']) ? $value['descriptiveName'] : '';
+                        $fields[]        = new Lp_RPC_Model_Field($value['name'], $descriptiveName);
                     }
                 }
             }
         }
+
         return $fields;
     }
 
@@ -524,7 +548,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public static function parseMessageDetailsResult ($object)
+    public static function parseMessageDetailsResult($object)
     {
         $messages = array();
         if (array_key_exists('result', $object)) {
@@ -546,7 +570,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public static function parseMessageListResult ($object)
+    public static function parseMessageListResult($object)
     {
         $messages = array();
         if (array_key_exists('result', $object)) {
@@ -559,6 +583,7 @@ class Lp_RPC_JSON_LPJSON
                 }
             }
         }
+
         return $messages;
     }
 
@@ -567,7 +592,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public static function parseStatisticsStatisticsResult ($object)
+    public static function parseStatisticsStatisticsResult($object)
     {
         $statistics = array();
         if (array_key_exists('result', $object)) {
@@ -580,6 +605,7 @@ class Lp_RPC_JSON_LPJSON
                 }
             }
         }
+
         return $statistics;
     }
 
@@ -588,7 +614,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return Lp_RPC_Model_Customer|void
      */
-    public static function parseUserLoginResult ($object)
+    public static function parseUserLoginResult($object)
     {
         if (array_key_exists('result', $object)) {
             if (array_key_exists('login', $object['result'])) {
@@ -602,10 +628,12 @@ class Lp_RPC_JSON_LPJSON
                             }
                         }
                     }
+
                     return new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
                 }
             }
         }
+
         return null;
     }
 
@@ -614,7 +642,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public static function parseImportListResult ($object)
+    public static function parseImportListResult($object)
     {
         $imports = array();
         if (array_key_exists('result', $object)) {
@@ -653,7 +681,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    private function buildPushSendGroupArray ($types, $env)
+    private function buildPushSendGroupArray($types, $env)
     {
         $array = array();
         if (is_string($types)) {
@@ -673,6 +701,7 @@ class Lp_RPC_JSON_LPJSON
                 }
             }
         }
+
         return $array;
     }
 
@@ -681,7 +710,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    private static function buildPushSendMessageArray ($message)
+    private static function buildPushSendMessageArray($message)
     {
         $array             = array();
         $array['_content'] = $message->getContent();
@@ -761,11 +790,11 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    private static function buildPushSendMessageCreateArray ($message)
+    private static function buildPushSendMessageCreateArray($message)
     {
         $array           = array();
         $array['create'] = self::buildPushSendMessageArray($message);
+
         return $array;
     }
-
 }
