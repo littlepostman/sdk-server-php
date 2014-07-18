@@ -15,7 +15,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.25';
+    const LP_API_VERSION = '1.0.26';
 
     /**
      * @const LP_SERVER_PRODUCTION
@@ -26,6 +26,9 @@ class Lp_RPC_LPClient
      * @const LP_SERVER_DEVELOPMENT
      */
     const LP_SERVER_DEVELOPMENT = 'https://develop.littlepostman.cloudcontrolled.com/rpc-api/';
+
+    /** @const string EXCEPTION_TEXT */
+    const EXCEPTION_TEXT = 'Unexpected exception occurred while creating JSON POST data / parsing the API response';
 
     /**
      * @var Lp_RPC_JSON_LPJSON
@@ -51,7 +54,7 @@ class Lp_RPC_LPClient
      * @param string $authKey
      * @param string $serverUrl
      */
-    public function __construct ($authKey, $serverUrl = self::LP_SERVER_PRODUCTION)
+    public function __construct($authKey, $serverUrl = self::LP_SERVER_PRODUCTION)
     {
         $this->_setJsonHandler(new Lp_RPC_JSON_LPJSON($authKey));
         $this->_setServerUrl($serverUrl);
@@ -64,17 +67,17 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function createDeviceFilter ($deviceFilter)
+    public function createDeviceFilter($deviceFilter)
     {
         try {
 
             $params = $this->_jsonHandler->prepareDeviceFilterCreateCall($deviceFilter);
             $result = $this->_invoke('deviceFilter', array($params));
             $this->_validate($result);
-            return $result['result']['create'][0];
 
+            return $result['result']['create'][0];
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -83,16 +86,15 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function createField ($field)
+    public function createField($field)
     {
         try {
 
             $params = $this->_jsonHandler->prepareFieldCreateCall($field);
             $result = $this->_invoke('field', array($params));
             $this->_validate($result);
-
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -101,16 +103,15 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function deleteDeviceFilterById ($id)
+    public function deleteDeviceFilterById($id)
     {
         try {
 
             $params = $this->_jsonHandler->prepareDeviceFilterDeleteCall($id);
             $result = $this->_invoke('deviceFilter', array($params));
             $this->_validate($result);
-
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -122,7 +123,7 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function getCustomer ($email, $password)
+    public function getCustomer($email, $password)
     {
         try {
 
@@ -133,10 +134,10 @@ class Lp_RPC_LPClient
             if (empty($customer)) {
                 throw new Exception('No customer given for email and password');
             }
-            return $customer;
 
+            return $customer;
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -149,17 +150,17 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function getDevices ($offset = 0, $limit = 1000, $fieldSet = null)
+    public function getDevices($offset = 0, $limit = 1000, $fieldSet = null)
     {
         try {
 
             $params = $this->_jsonHandler->prepareDeviceListCall($offset, $limit, $fieldSet);
             $result = $this->_invoke('device', array($params));
             $this->_validate($result);
-            return $this->_jsonHandler->parseDeviceListResult($result);
 
+            return $this->_jsonHandler->parseDeviceListResult($result);
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -171,17 +172,17 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function getDeviceFilters ($offset = 0, $limit = 100)
+    public function getDeviceFilters($offset = 0, $limit = 100)
     {
         try {
 
             $params = $this->_jsonHandler->prepareDeviceFilterListCall($offset, $limit);
             $result = $this->_invoke('deviceFilter', array($params));
             $this->_validate($result);
-            return $this->_jsonHandler->parseDeviceFilterListResult($result);
 
+            return $this->_jsonHandler->parseDeviceFilterListResult($result);
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -192,7 +193,7 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function getDeviceFilterCriteriaCalcByDeviceFilters ($deviceFilterOrArrayOfDeviceFilters)
+    public function getDeviceFilterCriteriaCalcByDeviceFilters($deviceFilterOrArrayOfDeviceFilters)
     {
         if (!is_array($deviceFilterOrArrayOfDeviceFilters)) {
             $deviceFilterOrArrayOfDeviceFilters = array($deviceFilterOrArrayOfDeviceFilters);
@@ -203,12 +204,13 @@ class Lp_RPC_LPClient
                 $params = $this->_jsonHandler->prepareDeviceFilterCalcCriteriaCall($deviceFilterOrArrayOfDeviceFilters);
                 $result = $this->_invoke('deviceFilter', array($params));
                 $this->_validate($result);
-                return $this->_jsonHandler->parseDeviceFilterCalcCriteriaResult($deviceFilterOrArrayOfDeviceFilters, $result);
 
+                return $this->_jsonHandler->parseDeviceFilterCalcCriteriaResult($deviceFilterOrArrayOfDeviceFilters, $result);
             } catch (Exception $e) {
-                throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+                throw new Exception(self::EXCEPTION_TEXT, 0, $e);
             }
         }
+
         return $deviceFilterOrArrayOfDeviceFilters;
     }
 
@@ -220,17 +222,17 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function getFields ($offset = 0, $limit = 100)
+    public function getFields($offset = 0, $limit = 100)
     {
         try {
 
             $params = $this->_jsonHandler->prepareFieldListCall($offset, $limit);
             $result = $this->_invoke('field', array($params));
             $this->_validate($result);
-            return $this->_jsonHandler->parseFieldListResult($result);
 
+            return $this->_jsonHandler->parseFieldListResult($result);
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -242,17 +244,17 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function getMessages ($offset = 0, $limit = 100)
+    public function getMessages($offset = 0, $limit = 100)
     {
         try {
 
             $params = $this->_jsonHandler->prepareMessageListCall($offset, $limit);
             $result = $this->_invoke('message', array($params));
             $this->_validate($result);
-            return $this->_jsonHandler->parseMessageListResult($result);
 
+            return $this->_jsonHandler->parseMessageListResult($result);
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -263,17 +265,17 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function getMessagesByIds ($ids)
+    public function getMessagesByIds($ids)
     {
         try {
 
             $params = $this->_jsonHandler->prepareMessageDetailsCall($ids);
             $result = $this->_invoke('message', array($params));
             $this->_validate($result);
-            return $this->_jsonHandler->parseMessageDetailsResult($result);
 
+            return $this->_jsonHandler->parseMessageDetailsResult($result);
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -285,17 +287,17 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function getStatistics ($startDate, $endDate)
+    public function getStatistics($startDate, $endDate)
     {
         try {
 
             $params = $this->_jsonHandler->prepareStatisticsStatisticsCall($startDate, $endDate);
             $result = $this->_invoke('statistics', array($params));
             $this->_validate($result);
-            return $this->_jsonHandler->parseStatisticsStatisticsResult($result);
 
+            return $this->_jsonHandler->parseStatisticsStatisticsResult($result);
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -307,16 +309,15 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function pushMessage ($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null)
+    public function pushMessage($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null)
     {
         try {
 
             $params = $this->_jsonHandler->preparePushSendCall($message, $type, $env, $fieldSetOrDeviceFilter);
             $result = $this->_invoke('push', array($params));
             $this->_validate($result);
-
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -325,17 +326,22 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function registerDevice ($device)
+    public function registerDevice($device)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceRegisterCall';
+        $invokeObjectName = 'device';
 
-            $params = $this->_jsonHandler->prepareDeviceRegisterCall($device);
-            $result = $this->_invoke('device', array($params));
-            $this->_validate($result);
-
-        } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
-        }
+        // prepare the params and invoke with the arguments passed to the current method
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array(
+                    $prepareParamsMethodName,
+                    $invokeObjectName
+                ),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -344,17 +350,43 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function setDeviceData ($device, $data)
+    public function setDeviceData($device, $data)
     {
         try {
 
             $params = $this->_jsonHandler->prepareDeviceSetDataCall($device, $data);
             $result = $this->_invoke('device', array($params));
             $this->_validate($result);
-
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
+    }
+
+    /**
+     * @param Lp_RPC_Model_Device $device
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function getDeviceMessageInbox($device, $offset = 0, $limit = 100)
+    {
+        $prepareParamsMethodName = 'prepareDeviceMessageInboxCall';
+        $invokeObjectName = 'device';
+
+        // prepare the params and invoke with the arguments passed to the current method
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array(
+                    $prepareParamsMethodName,
+                    $invokeObjectName
+                ),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -363,16 +395,15 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function registerDeviceEvent ($device, $eventType)
+    public function registerDeviceEvent($device, $eventType)
     {
         try {
 
             $params = $this->_jsonHandler->prepareDeviceRegisterEventCall($device, $eventType);
             $result = $this->_invoke('device', array($params));
             $this->_validate($result);
-
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -382,16 +413,15 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function setDeviceMessageResponse ($device, $message)
+    public function setDeviceMessageResponse($device, $message)
     {
         try {
 
             $params = $this->_jsonHandler->prepareResponseUpdateCall($device, $message);
             $result = $this->_invoke('response', array($params));
             $this->_validate($result);
-
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -400,16 +430,15 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function unregisterDevice ($device)
+    public function unregisterDevice($device)
     {
         try {
 
             $params = $this->_jsonHandler->prepareDeviceUnregisterCall($device);
             $result = $this->_invoke('device', array($params));
             $this->_validate($result);
-
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -420,17 +449,17 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function updateDeviceFilter ($deviceFilter)
+    public function updateDeviceFilter($deviceFilter)
     {
         try {
 
             $params = $this->_jsonHandler->prepareDeviceFilterUpdateCall($deviceFilter);
             $result = $this->_invoke('deviceFilter', array($params));
             $this->_validate($result);
-            return $result['result']['update'][0];
 
+            return $result['result']['update'][0];
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -449,7 +478,7 @@ class Lp_RPC_LPClient
 
             return $this->_jsonHandler->parseGenerateTokenResult($result);
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -468,10 +497,10 @@ class Lp_RPC_LPClient
             $params = $this->_jsonHandler->prepareImportListCall($offset, $limit);
             $result = $this->_invoke('import', array($params));
             $this->_validate($result);
-            return $this->_jsonHandler->parseImportListResult($result);
 
+            return $this->_jsonHandler->parseImportListResult($result);
         } catch (Exception $e) {
-            throw new Exception('Unexpected exception occurred while creating JSON POST data', 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
         }
     }
 
@@ -481,7 +510,7 @@ class Lp_RPC_LPClient
      *
      * @return string
      */
-    protected function _invoke ($method, $params)
+    protected function _invoke($method, $params)
     {
         $rpc            = array();
         $rpc['jsonrpc'] = '2.0';
@@ -505,7 +534,7 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    protected function _validate ($result)
+    protected function _validate($result)
     {
         $errors = $this->_jsonHandler->parseError($result);
         if (!empty($errors)) {
@@ -516,7 +545,7 @@ class Lp_RPC_LPClient
     /**
      * @param string $json
      */
-    protected function _didReceiveJSON ($json)
+    protected function _didReceiveJSON($json)
     {
         $this->_log('< ' . $json);
     }
@@ -524,7 +553,7 @@ class Lp_RPC_LPClient
     /**
      * @param string $json
      */
-    protected function _willSendJSON ($json)
+    protected function _willSendJSON($json)
     {
         $this->_log('> ' . $json);
     }
@@ -532,7 +561,7 @@ class Lp_RPC_LPClient
     /**
      * @param string $log
      */
-    protected function _log ($log)
+    protected function _log($log)
     {
         if (!$this->_logEnabled) {
             return;
@@ -544,7 +573,7 @@ class Lp_RPC_LPClient
     /**
      * @param \Lp_RPC_JSON_LPJSON $jsonHandler
      */
-    public function _setJsonHandler (\Lp_RPC_JSON_LPJSON $jsonHandler)
+    public function _setJsonHandler(\Lp_RPC_JSON_LPJSON $jsonHandler)
     {
         $this->_jsonHandler = $jsonHandler;
     }
@@ -552,7 +581,7 @@ class Lp_RPC_LPClient
     /**
      * @param bool $logEnabled
      */
-    public function _setLogEnabled ($logEnabled)
+    public function _setLogEnabled($logEnabled)
     {
         $this->_logEnabled = (bool) $logEnabled;
     }
@@ -560,9 +589,39 @@ class Lp_RPC_LPClient
     /**
      * @param string $serverUrl
      */
-    public function _setServerUrl ($serverUrl)
+    public function _setServerUrl($serverUrl)
     {
         $this->_serverUrl = (string) $serverUrl;
     }
 
+    /**
+     * 1) uses the first argument at the method name which would prepare the params for the API call
+     * 2) uses the second argument as the RPC API object that we are going to invoke the method on
+     * 3) passes the rest of the arguments to the prepare call described in 1)
+     *
+     * @return NULL | array
+     *
+     * @throws Exception
+     */
+    private function _prepareParamsAndInvoke()
+    {
+        $functionArgs = func_get_args();
+
+        $prepareParamsMethodName = array_shift($functionArgs);
+        $invokeObjectName = array_shift($functionArgs);
+        try {
+            $params = call_user_func_array(
+                array($this->_jsonHandler, $prepareParamsMethodName),
+                $functionArgs
+            );
+
+            $result = $this->_invoke($invokeObjectName, array($params));
+
+            $this->_validate($result);
+        } catch (Exception $e) {
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
+        }
+
+        return $result;
+    }
 }
