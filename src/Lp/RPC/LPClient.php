@@ -69,16 +69,18 @@ class Lp_RPC_LPClient
      */
     public function createDeviceFilter($deviceFilter)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceFilterCreateCall';
+        $invokeObjectName = 'deviceFilter';
 
-            $params = $this->_jsonHandler->prepareDeviceFilterCreateCall($deviceFilter);
-            $result = $this->_invoke('deviceFilter', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $result['result']['create'][0];
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $result['result']['create'][0];
     }
 
     /**
@@ -88,14 +90,16 @@ class Lp_RPC_LPClient
      */
     public function createField($field)
     {
-        try {
+        $prepareParamsMethodName = 'prepareFieldCreateCall';
+        $invokeObjectName = 'field';
 
-            $params = $this->_jsonHandler->prepareFieldCreateCall($field);
-            $result = $this->_invoke('field', array($params));
-            $this->_validate($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -105,14 +109,16 @@ class Lp_RPC_LPClient
      */
     public function deleteDeviceFilterById($id)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceFilterDeleteCall';
+        $invokeObjectName = 'deviceFilter';
 
-            $params = $this->_jsonHandler->prepareDeviceFilterDeleteCall($id);
-            $result = $this->_invoke('deviceFilter', array($params));
-            $this->_validate($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -125,20 +131,22 @@ class Lp_RPC_LPClient
      */
     public function getCustomer($email, $password)
     {
-        try {
+        $prepareParamsMethodName = 'prepareUserLoginCall';
+        $invokeObjectName = 'user';
 
-            $params = $this->_jsonHandler->prepareUserLoginCall($email, $password);
-            $result = $this->_invoke('user', array($params));
-            $this->_validate($result);
-            $customer = $this->_jsonHandler->parseUserLoginResult($result);
-            if (empty($customer)) {
-                throw new Exception('No customer given for email and password');
-            }
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $customer;
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
+        if (empty($result)) {
+            throw new Exception('No customer given for email and password');
         }
+
+        return $result;
     }
 
     /**
@@ -152,16 +160,18 @@ class Lp_RPC_LPClient
      */
     public function getDevices($offset = 0, $limit = 1000, $fieldSet = null)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceListCall';
+        $invokeObjectName = 'device';
 
-            $params = $this->_jsonHandler->prepareDeviceListCall($offset, $limit, $fieldSet);
-            $result = $this->_invoke('device', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $this->_jsonHandler->parseDeviceListResult($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $this->_jsonHandler->parseDeviceListResult($result);
     }
 
     /**
@@ -174,16 +184,18 @@ class Lp_RPC_LPClient
      */
     public function getDeviceFilters($offset = 0, $limit = 100)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceFilterListCall';
+        $invokeObjectName = 'deviceFilter';
 
-            $params = $this->_jsonHandler->prepareDeviceFilterListCall($offset, $limit);
-            $result = $this->_invoke('deviceFilter', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $this->_jsonHandler->parseDeviceFilterListResult($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $this->_jsonHandler->parseDeviceFilterListResult($result);
     }
 
     /**
@@ -198,6 +210,7 @@ class Lp_RPC_LPClient
         if (!is_array($deviceFilterOrArrayOfDeviceFilters)) {
             $deviceFilterOrArrayOfDeviceFilters = array($deviceFilterOrArrayOfDeviceFilters);
         }
+
         if (!empty($deviceFilterOrArrayOfDeviceFilters)) {
             try {
 
@@ -224,16 +237,18 @@ class Lp_RPC_LPClient
      */
     public function getFields($offset = 0, $limit = 100)
     {
-        try {
+        $prepareParamsMethodName = 'prepareFieldListCall';
+        $invokeObjectName = 'field';
 
-            $params = $this->_jsonHandler->prepareFieldListCall($offset, $limit);
-            $result = $this->_invoke('field', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $this->_jsonHandler->parseFieldListResult($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $this->_jsonHandler->parseFieldListResult($result);
     }
 
     /**
@@ -246,16 +261,18 @@ class Lp_RPC_LPClient
      */
     public function getMessages($offset = 0, $limit = 100)
     {
-        try {
+        $prepareParamsMethodName = 'prepareMessageListCall';
+        $invokeObjectName = 'message';
 
-            $params = $this->_jsonHandler->prepareMessageListCall($offset, $limit);
-            $result = $this->_invoke('message', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $this->_jsonHandler->parseMessageListResult($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $this->_jsonHandler->parseMessageListResult($result);
     }
 
     /**
@@ -267,16 +284,18 @@ class Lp_RPC_LPClient
      */
     public function getMessagesByIds($ids)
     {
-        try {
+        $prepareParamsMethodName = 'prepareMessageDetailsCall';
+        $invokeObjectName = 'message';
 
-            $params = $this->_jsonHandler->prepareMessageDetailsCall($ids);
-            $result = $this->_invoke('message', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $this->_jsonHandler->parseMessageDetailsResult($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $this->_jsonHandler->parseMessageDetailsResult($result);
     }
 
     /**
@@ -289,16 +308,18 @@ class Lp_RPC_LPClient
      */
     public function getStatistics($startDate, $endDate)
     {
-        try {
+        $prepareParamsMethodName = 'prepareStatisticsStatisticsCall';
+        $invokeObjectName = 'statistics';
 
-            $params = $this->_jsonHandler->prepareStatisticsStatisticsCall($startDate, $endDate);
-            $result = $this->_invoke('statistics', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $this->_jsonHandler->parseStatisticsStatisticsResult($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $this->_jsonHandler->parseStatisticsStatisticsResult($result);
     }
 
     /**
@@ -311,14 +332,16 @@ class Lp_RPC_LPClient
      */
     public function pushMessage($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null)
     {
-        try {
+        $prepareParamsMethodName = 'preparePushSendCall';
+        $invokeObjectName = 'push';
 
-            $params = $this->_jsonHandler->preparePushSendCall($message, $type, $env, $fieldSetOrDeviceFilter);
-            $result = $this->_invoke('push', array($params));
-            $this->_validate($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -331,14 +354,10 @@ class Lp_RPC_LPClient
         $prepareParamsMethodName = 'prepareDeviceRegisterCall';
         $invokeObjectName = 'device';
 
-        // prepare the params and invoke with the arguments passed to the current method
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
             array_merge(
-                array(
-                    $prepareParamsMethodName,
-                    $invokeObjectName
-                ),
+                array($prepareParamsMethodName, $invokeObjectName),
                 func_get_args()
             )
         );
@@ -352,14 +371,16 @@ class Lp_RPC_LPClient
      */
     public function setDeviceData($device, $data)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceSetDataCall';
+        $invokeObjectName = 'device';
 
-            $params = $this->_jsonHandler->prepareDeviceSetDataCall($device, $data);
-            $result = $this->_invoke('device', array($params));
-            $this->_validate($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -380,10 +401,7 @@ class Lp_RPC_LPClient
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
             array_merge(
-                array(
-                    $prepareParamsMethodName,
-                    $invokeObjectName
-                ),
+                array($prepareParamsMethodName, $invokeObjectName),
                 func_get_args()
             )
         );
@@ -397,14 +415,16 @@ class Lp_RPC_LPClient
      */
     public function registerDeviceEvent($device, $eventType)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceRegisterEventCall';
+        $invokeObjectName = 'device';
 
-            $params = $this->_jsonHandler->prepareDeviceRegisterEventCall($device, $eventType);
-            $result = $this->_invoke('device', array($params));
-            $this->_validate($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -415,14 +435,16 @@ class Lp_RPC_LPClient
      */
     public function setDeviceMessageResponse($device, $message)
     {
-        try {
+        $prepareParamsMethodName = 'prepareResponseUpdateCall';
+        $invokeObjectName = 'response';
 
-            $params = $this->_jsonHandler->prepareResponseUpdateCall($device, $message);
-            $result = $this->_invoke('response', array($params));
-            $this->_validate($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -432,14 +454,16 @@ class Lp_RPC_LPClient
      */
     public function unregisterDevice($device)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceUnregisterCall';
+        $invokeObjectName = 'device';
 
-            $params = $this->_jsonHandler->prepareDeviceUnregisterCall($device);
-            $result = $this->_invoke('device', array($params));
-            $this->_validate($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
     }
 
     /**
@@ -451,16 +475,18 @@ class Lp_RPC_LPClient
      */
     public function updateDeviceFilter($deviceFilter)
     {
-        try {
+        $prepareParamsMethodName = 'prepareDeviceFilterUpdateCall';
+        $invokeObjectName = 'deviceFilter';
 
-            $params = $this->_jsonHandler->prepareDeviceFilterUpdateCall($deviceFilter);
-            $result = $this->_invoke('deviceFilter', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $result['result']['update'][0];
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $result['result']['update'][0];
     }
 
     /**
@@ -470,16 +496,18 @@ class Lp_RPC_LPClient
      */
     public function generateToken($tokenType)
     {
-        try {
+        $prepareParamsMethodName = 'prepareGenerateTokenCall';
+        $invokeObjectName = 'token';
 
-            $params = $this->_jsonHandler->prepareGenerateTokenCall($tokenType);
-            $result = $this->_invoke('token', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $this->_jsonHandler->parseGenerateTokenResult($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $this->_jsonHandler->parseGenerateTokenResult($result);
     }
 
     /**
@@ -492,17 +520,20 @@ class Lp_RPC_LPClient
      */
     public function getImports($offset = 0, $limit = 100)
     {
-        try {
+        $prepareParamsMethodName = 'prepareImportListCall';
+        $invokeObjectName = 'import';
 
-            $params = $this->_jsonHandler->prepareImportListCall($offset, $limit);
-            $result = $this->_invoke('import', array($params));
-            $this->_validate($result);
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
 
-            return $this->_jsonHandler->parseImportListResult($result);
-        } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
-        }
+        return $this->_jsonHandler->parseImportListResult($result);
     }
+
 
     /**
      * @param string $method
@@ -609,6 +640,7 @@ class Lp_RPC_LPClient
 
         $prepareParamsMethodName = array_shift($functionArgs);
         $invokeObjectName = array_shift($functionArgs);
+
         try {
             $params = call_user_func_array(
                 array($this->_jsonHandler, $prepareParamsMethodName),

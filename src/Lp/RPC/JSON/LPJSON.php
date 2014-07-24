@@ -69,7 +69,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceListCall($offset, $limit, $fieldSet)
+    public function prepareDeviceListCall($offset = 0, $limit = 1000, $fieldSet = null)
     {
         $params           = array();
         $params['offset'] = $offset;
@@ -222,7 +222,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareDeviceFilterListCall($offset, $limit)
+    public function prepareDeviceFilterListCall($offset = 0, $limit = 100)
     {
         $params           = array();
         $params['offset'] = $offset;
@@ -297,7 +297,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareMessageListCall($offset, $limit)
+    public function prepareMessageListCall($offset = 0, $limit = 100)
     {
         $params               = array();
         $params['offset']     = $offset;
@@ -315,7 +315,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function preparePushSendCall($message, $type, $env, $fieldSetOrDeviceFilter)
+    public function preparePushSendCall($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null)
     {
         $params            = array();
         $params['message'] = $this->buildPushSendMessageCreateArray($message);
@@ -405,7 +405,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareImportListCall($offset, $limit)
+    public function prepareImportListCall($offset = 0, $limit = 100)
     {
         $params           = array();
         $params['offset'] = $offset;
