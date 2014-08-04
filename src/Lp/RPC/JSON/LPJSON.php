@@ -267,7 +267,7 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareFieldListCall($offset, $limit)
+    public function prepareFieldListCall($offset = 0, $limit = 100)
     {
         $params           = array();
         $params['offset'] = $offset;
