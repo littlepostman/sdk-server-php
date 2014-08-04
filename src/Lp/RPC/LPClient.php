@@ -15,7 +15,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.27';
+    const LP_API_VERSION = '1.0.28';
 
     /**
      * @const LP_SERVER_PRODUCTION
@@ -142,11 +142,13 @@ class Lp_RPC_LPClient
             )
         );
 
-        if (empty($result)) {
+        $customer = $this->_jsonHandler->parseUserLoginResult($result);
+
+        if (empty($customer)) {
             throw new Exception('No customer given for email and password');
         }
 
-        return $result;
+        return $customer;
     }
 
     /**
