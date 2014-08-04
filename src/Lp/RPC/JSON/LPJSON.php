@@ -24,9 +24,10 @@ class Lp_RPC_JSON_LPJSON
 {
 
     /**
+     * the generate method keyword used in many places
      * @const string
      */
-    const RPC_TOKEN_GENERATE = 'generate';
+    const GENERATE = 'generate';
 
 
     /**
@@ -387,6 +388,23 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param \Lp_RPC_Model_Customer $customer
+     *
+     * @return array
+     */
+    public function prepareRegisterCustomerCall(\Lp_RPC_Model_Customer $customer)
+    {
+        $params                  = array();
+        $params['email']         = $customer->getEmail();
+        $params['customerName']  = $customer->getName();
+        $params['contactPerson'] = $customer->getContactPerson();
+        $params['language']      = $customer->getLanguage();
+        $params['password']      = $customer->getPassword();
+
+        return $this->prepare('register', $params);
+    }
+
+    /**
      * @param string $tokenType
      *
      * @return array
@@ -662,11 +680,32 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return string
      */
+    public function parseRegisterCustomerResult($object)
+    {
+        if (array_key_exists('result', $object)) {
+            if (isset($object['result']['register'])) {
+                $id = $object['result']['register'];
+
+                return $id;
+            }
+        }
+
+        throw new Exception('Unexpected exception occurred while parsing registerCustomer result', 0);
+    }
+
+
+    /**
+     * @param array $object
+     *
+     * @throws Exception
+     *
+     * @return string
+     */
     public function parseGenerateTokenResult($object)
     {
         if (array_key_exists('result', $object)) {
-            if (isset($object['result'][self::RPC_TOKEN_GENERATE])) {
-                $token = $object['result'][self::RPC_TOKEN_GENERATE];
+            if (isset($object['result'][self::GENERATE])) {
+                $token = $object['result'][self::GENERATE];
 
                 return $token;
             }

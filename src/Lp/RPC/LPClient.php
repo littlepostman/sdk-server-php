@@ -490,6 +490,29 @@ class Lp_RPC_LPClient
     }
 
     /**
+     * @param \Lp_RPC_Model_Customer $customer
+     *
+     * @return int
+     *
+     * @throws Exception
+     */
+    public function registerCustomer(\Lp_RPC_Model_Customer $customer)
+    {
+        $prepareParamsMethodName = 'prepareRegisterCustomerCall';
+        $invokeObjectName = 'customer';
+
+        $result = call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
+
+        return $this->_jsonHandler->parseRegisterCustomerResult($result);
+    }
+
+    /**
      * @param string $tokenType
      *
      * @throws Exception
