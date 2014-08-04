@@ -142,11 +142,13 @@ class Lp_RPC_LPClient
             )
         );
 
-        if (empty($result)) {
+        $customer = $this->_jsonHandler->parseUserLoginResult($result);
+
+        if (empty($customer)) {
             throw new Exception('No customer given for email and password');
         }
 
-        return $result;
+        return $customer;
     }
 
     /**
