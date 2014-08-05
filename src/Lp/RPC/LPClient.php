@@ -15,7 +15,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.29';
+    const LP_API_VERSION = '1.0.30';
 
     /**
      * @const LP_SERVER_PRODUCTION
@@ -70,7 +70,7 @@ class Lp_RPC_LPClient
     public function createDeviceFilter($deviceFilter)
     {
         $prepareParamsMethodName = 'prepareDeviceFilterCreateCall';
-        $invokeObjectName = 'deviceFilter';
+        $invokeObjectName        = 'deviceFilter';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -91,7 +91,7 @@ class Lp_RPC_LPClient
     public function createField($field)
     {
         $prepareParamsMethodName = 'prepareFieldCreateCall';
-        $invokeObjectName = 'field';
+        $invokeObjectName        = 'field';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -110,7 +110,7 @@ class Lp_RPC_LPClient
     public function deleteDeviceFilterById($id)
     {
         $prepareParamsMethodName = 'prepareDeviceFilterDeleteCall';
-        $invokeObjectName = 'deviceFilter';
+        $invokeObjectName        = 'deviceFilter';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -132,7 +132,7 @@ class Lp_RPC_LPClient
     public function getCustomer($email, $password)
     {
         $prepareParamsMethodName = 'prepareUserLoginCall';
-        $invokeObjectName = 'user';
+        $invokeObjectName        = 'user';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -163,7 +163,7 @@ class Lp_RPC_LPClient
     public function getDevices($offset = 0, $limit = 1000, $fieldSet = null)
     {
         $prepareParamsMethodName = 'prepareDeviceListCall';
-        $invokeObjectName = 'device';
+        $invokeObjectName        = 'device';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -187,7 +187,7 @@ class Lp_RPC_LPClient
     public function getDeviceFilters($offset = 0, $limit = 100)
     {
         $prepareParamsMethodName = 'prepareDeviceFilterListCall';
-        $invokeObjectName = 'deviceFilter';
+        $invokeObjectName        = 'deviceFilter';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -240,7 +240,7 @@ class Lp_RPC_LPClient
     public function getFields($offset = 0, $limit = 100)
     {
         $prepareParamsMethodName = 'prepareFieldListCall';
-        $invokeObjectName = 'field';
+        $invokeObjectName        = 'field';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -264,7 +264,7 @@ class Lp_RPC_LPClient
     public function getMessages($offset = 0, $limit = 100)
     {
         $prepareParamsMethodName = 'prepareMessageListCall';
-        $invokeObjectName = 'message';
+        $invokeObjectName        = 'message';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -287,7 +287,7 @@ class Lp_RPC_LPClient
     public function getMessagesByIds($ids)
     {
         $prepareParamsMethodName = 'prepareMessageDetailsCall';
-        $invokeObjectName = 'message';
+        $invokeObjectName        = 'message';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -311,7 +311,7 @@ class Lp_RPC_LPClient
     public function getStatistics($startDate, $endDate)
     {
         $prepareParamsMethodName = 'prepareStatisticsStatisticsCall';
-        $invokeObjectName = 'statistics';
+        $invokeObjectName        = 'statistics';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -335,7 +335,7 @@ class Lp_RPC_LPClient
     public function pushMessage($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null)
     {
         $prepareParamsMethodName = 'preparePushSendCall';
-        $invokeObjectName = 'push';
+        $invokeObjectName        = 'push';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -354,7 +354,7 @@ class Lp_RPC_LPClient
     public function registerDevice($device)
     {
         $prepareParamsMethodName = 'prepareDeviceRegisterCall';
-        $invokeObjectName = 'device';
+        $invokeObjectName        = 'device';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -374,7 +374,7 @@ class Lp_RPC_LPClient
     public function setDeviceData($device, $data)
     {
         $prepareParamsMethodName = 'prepareDeviceSetDataCall';
-        $invokeObjectName = 'device';
+        $invokeObjectName        = 'device';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -387,8 +387,8 @@ class Lp_RPC_LPClient
 
     /**
      * @param Lp_RPC_Model_Device $device
-     * @param int $offset
-     * @param int $limit
+     * @param int                 $offset
+     * @param int                 $limit
      *
      * @return array
      *
@@ -397,7 +397,7 @@ class Lp_RPC_LPClient
     public function getDeviceMessageInbox($device, $offset = 0, $limit = 100)
     {
         $prepareParamsMethodName = 'prepareDeviceMessageInboxCall';
-        $invokeObjectName = 'device';
+        $invokeObjectName        = 'device';
 
         // prepare the params and invoke with the arguments passed to the current method
         return call_user_func_array(
@@ -418,7 +418,7 @@ class Lp_RPC_LPClient
     public function registerDeviceEvent($device, $eventType)
     {
         $prepareParamsMethodName = 'prepareDeviceRegisterEventCall';
-        $invokeObjectName = 'device';
+        $invokeObjectName        = 'device';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -438,7 +438,7 @@ class Lp_RPC_LPClient
     public function setDeviceMessageResponse($device, $message)
     {
         $prepareParamsMethodName = 'prepareResponseUpdateCall';
-        $invokeObjectName = 'response';
+        $invokeObjectName        = 'response';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -457,7 +457,7 @@ class Lp_RPC_LPClient
     public function unregisterDevice($device)
     {
         $prepareParamsMethodName = 'prepareDeviceUnregisterCall';
-        $invokeObjectName = 'device';
+        $invokeObjectName        = 'device';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -478,7 +478,7 @@ class Lp_RPC_LPClient
     public function updateDeviceFilter($deviceFilter)
     {
         $prepareParamsMethodName = 'prepareDeviceFilterUpdateCall';
-        $invokeObjectName = 'deviceFilter';
+        $invokeObjectName        = 'deviceFilter';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -501,7 +501,7 @@ class Lp_RPC_LPClient
     public function registerCustomer(\Lp_RPC_Model_Customer $customer)
     {
         $prepareParamsMethodName = 'prepareRegisterCustomerCall';
-        $invokeObjectName = 'customer';
+        $invokeObjectName        = 'customer';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -522,7 +522,7 @@ class Lp_RPC_LPClient
     public function generateToken($tokenType)
     {
         $prepareParamsMethodName = 'prepareGenerateTokenCall';
-        $invokeObjectName = 'token';
+        $invokeObjectName        = 'token';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -546,7 +546,7 @@ class Lp_RPC_LPClient
     public function getImports($offset = 0, $limit = 100)
     {
         $prepareParamsMethodName = 'prepareImportListCall';
-        $invokeObjectName = 'import';
+        $invokeObjectName        = 'import';
 
         $result = call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -664,7 +664,7 @@ class Lp_RPC_LPClient
         $functionArgs = func_get_args();
 
         $prepareParamsMethodName = array_shift($functionArgs);
-        $invokeObjectName = array_shift($functionArgs);
+        $invokeObjectName        = array_shift($functionArgs);
 
         try {
             $params = call_user_func_array(

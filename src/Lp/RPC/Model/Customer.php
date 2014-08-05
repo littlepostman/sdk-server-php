@@ -29,7 +29,17 @@ class Lp_RPC_Model_Customer
     /**
      * @var string
      */
-    private $_contactPerson;
+    private $_contactPersonTitle;
+
+    /**
+     * @var string
+     */
+    private $_contactPersonFirstName;
+
+    /**
+     * @var string
+     */
+    private $_contactPersonLastName;
 
     /**
      * @var string
@@ -50,21 +60,12 @@ class Lp_RPC_Model_Customer
     public function __construct(
         $name,
         $logoUrl,
-        $apps,
-        $email = '',
-        $contactPerson = '',
-        $language = '',
-        $password = ''
+        $apps
     )
     {
         $this->_name    = $name;
         $this->_logoUrl = $logoUrl;
         $this->_apps    = $apps;
-
-        $this->_email = $email;
-        $this->_contactPerson = $contactPerson;
-        $this->_language = $language;
-        $this->_password = $password;
     }
 
     /**
@@ -76,11 +77,27 @@ class Lp_RPC_Model_Customer
     }
 
     /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->_name = $name;
+    }
+
+    /**
      * @return string
      */
     public function getLogoUrl()
     {
         return $this->_logoUrl;
+    }
+
+    /**
+     * @param string $logoUrl
+     */
+    public function setLogoUrl($logoUrl)
+    {
+        $this->_logoUrl = $logoUrl;
     }
 
     /**
@@ -92,11 +109,27 @@ class Lp_RPC_Model_Customer
     }
 
     /**
+     * @param array $apps
+     */
+    public function setApps($apps)
+    {
+        $this->_apps = $apps;
+    }
+
+    /**
      * @return string
      */
     public function getEmail()
     {
         return $this->_email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->_email = $email;
     }
 
     /**
@@ -108,11 +141,59 @@ class Lp_RPC_Model_Customer
     }
 
     /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->_language = $language;
+    }
+
+    /**
      * @return string
      */
-    public function getContactPerson()
+    public function getContactPersonTitle()
     {
-        return $this->_contactPerson;
+        return $this->_contactPersonTitle;
+    }
+
+    /**
+     * @param string $contactPersonTitle
+     */
+    public function setContactPersonTitle($contactPersonTitle)
+    {
+        $this->_contactPersonTitle = $contactPersonTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactPersonFirstName()
+    {
+        return $this->_contactPersonFirstName;
+    }
+
+    /**
+     * @param string $contactPersonFirstName
+     */
+    public function setContactPersonFirstName($contactPersonFirstName)
+    {
+        $this->_contactPersonFirstName = $contactPersonFirstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactPersonLastName()
+    {
+        return $this->_contactPersonLastName;
+    }
+
+    /**
+     * @param string $contactPersonLastName
+     */
+    public function setContactPersonLastName($contactPersonLastName)
+    {
+        $this->_contactPersonLastName = $contactPersonLastName;
     }
 
     /**
@@ -121,5 +202,13 @@ class Lp_RPC_Model_Customer
     public function getPassword()
     {
         return $this->_password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->_password = $password;
     }
 }
