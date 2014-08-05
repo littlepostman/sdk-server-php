@@ -394,12 +394,14 @@ class Lp_RPC_JSON_LPJSON
      */
     public function prepareRegisterCustomerCall(\Lp_RPC_Model_Customer $customer)
     {
-        $params                  = array();
-        $params['email']         = $customer->getEmail();
-        $params['customerName']  = $customer->getName();
-        $params['contactPerson'] = $customer->getContactPerson();
-        $params['language']      = $customer->getLanguage();
-        $params['password']      = $customer->getPassword();
+        $params                           = array();
+        $params['email']                  = $customer->getEmail();
+        $params['customerName']           = $customer->getName();
+        $params['contactPersonTitle']     = $customer->getContactPersonTitle();
+        $params['contactPersonFirstName'] = $customer->getContactPersonFirstName();
+        $params['contactPersonLastName']  = $customer->getContactPersonLastName();
+        $params['language']               = $customer->getLanguage();
+        $params['password']               = $customer->getPassword();
 
         return $this->prepare('register', $params);
     }
