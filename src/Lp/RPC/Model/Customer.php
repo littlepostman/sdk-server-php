@@ -29,28 +29,31 @@ class Lp_RPC_Model_Customer
     /**
      * @var string
      */
-    private $_contactPersonTitle;
-
+    private $_appName;
+    /**
+     * @var string
+     */
+    private $_contactPersonGender;
     /**
      * @var string
      */
     private $_contactPersonFirstName;
-
     /**
      * @var string
      */
     private $_contactPersonLastName;
-
     /**
      * @var string
      */
     private $_language;
-
     /**
      * @var string
      */
     private $_password;
-
+    /**
+     * @var bool
+     */
+    private $_hasAcceptedTC;
 
     /**
      * @param string $name
@@ -117,6 +120,38 @@ class Lp_RPC_Model_Customer
     }
 
     /**
+     * @return boolean
+     */
+    public function getHasAcceptedTC()
+    {
+        return $this->_hasAcceptedTC;
+    }
+
+    /**
+     * @param boolean $hasAcceptedTC
+     */
+    public function setHasAcceptedTC($hasAcceptedTC)
+    {
+        $this->_hasAcceptedTC = $hasAcceptedTC;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppName()
+    {
+        return $this->_appName;
+    }
+
+    /**
+     * @param string $appName
+     */
+    public function setAppName($appName)
+    {
+        $this->_appName = $appName;
+    }
+
+    /**
      * @return string
      */
     public function getEmail()
@@ -151,17 +186,17 @@ class Lp_RPC_Model_Customer
     /**
      * @return string
      */
-    public function getContactPersonTitle()
+    public function getContactPersonGender()
     {
-        return $this->_contactPersonTitle;
+        return $this->_contactPersonGender;
     }
 
     /**
-     * @param string $contactPersonTitle
+     * @param string $contactPersonGender
      */
-    public function setContactPersonTitle($contactPersonTitle)
+    public function setContactPersonGender($contactPersonGender)
     {
-        $this->_contactPersonTitle = $contactPersonTitle;
+        $this->_contactPersonGender = $contactPersonGender;
     }
 
     /**
