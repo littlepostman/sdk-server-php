@@ -152,6 +152,28 @@ class Lp_RPC_LPClient
     }
 
     /**
+     * @param $email
+     * @param $password
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function setHasAcceptedTC($email, $password)
+    {
+        $prepareParamsMethodName = 'prepareSetHasAcceptedTC';
+        $invokeObjectName        = 'user';
+
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
+    }
+
+    /**
      * @param int                   $offset
      * @param int                   $limit
      * @param Lp_RPC_Model_FieldSet $fieldSet

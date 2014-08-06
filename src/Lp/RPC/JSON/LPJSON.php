@@ -25,6 +25,7 @@ class Lp_RPC_JSON_LPJSON
 
     /**
      * the generate method keyword used in many places
+     *
      * @const string
      */
     const GENERATE = 'generate';
@@ -140,8 +141,8 @@ class Lp_RPC_JSON_LPJSON
 
     /**
      * @param Lp_RPC_Model_Device $device
-     * @param int $offset
-     * @param int $limit
+     * @param int                 $offset
+     * @param int                 $limit
      *
      * @return array
      */
@@ -388,6 +389,21 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param string $email
+     * @param string $password
+     *
+     * @return array
+     */
+    public function prepareSetHasAcceptedTC($email, $password)
+    {
+        $params             = array();
+        $params['email']    = $email;
+        $params['password'] = $password;
+
+        return $this->prepare('setHasAcceptedTC', $params);
+    }
+
+    /**
      * @param \Lp_RPC_Model_Customer $customer
      *
      * @return array
@@ -397,7 +413,8 @@ class Lp_RPC_JSON_LPJSON
         $params                           = array();
         $params['email']                  = $customer->getEmail();
         $params['customerName']           = $customer->getName();
-        $params['contactPersonTitle']     = $customer->getContactPersonTitle();
+        $params['appName']                = $customer->getAppName();
+        $params['contactPersonGender']    = $customer->getContactPersonGender();
         $params['contactPersonFirstName'] = $customer->getContactPersonFirstName();
         $params['contactPersonLastName']  = $customer->getContactPersonLastName();
         $params['language']               = $customer->getLanguage();
@@ -649,7 +666,10 @@ class Lp_RPC_JSON_LPJSON
                         }
                     }
 
-                    return new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
+                    $customer = new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
+                    $customer->setHasAcceptedTC((bool)$login['hasAcceptedTC']);
+
+                    return $customer;
                 }
             }
         }
