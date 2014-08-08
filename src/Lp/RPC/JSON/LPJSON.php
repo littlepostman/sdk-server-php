@@ -390,15 +390,13 @@ class Lp_RPC_JSON_LPJSON
 
     /**
      * @param string $email
-     * @param string $password
      *
      * @return array
      */
-    public function prepareSetHasAcceptedTC($email, $password)
+    public function prepareSetHasAcceptedTC($email)
     {
         $params             = array();
         $params['email']    = $email;
-        $params['password'] = $password;
 
         return $this->prepare('setHasAcceptedTC', $params);
     }
@@ -666,10 +664,7 @@ class Lp_RPC_JSON_LPJSON
                         }
                     }
 
-                    $customer = new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
-                    $customer->setHasAcceptedTC((bool)$login['hasAcceptedTC']);
-
-                    return $customer;
+                    return new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
                 }
             }
         }
