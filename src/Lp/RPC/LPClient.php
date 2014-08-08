@@ -15,7 +15,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.31';
+    const LP_API_VERSION = '1.0.30';
 
     /**
      * @const LP_SERVER_PRODUCTION
@@ -122,8 +122,8 @@ class Lp_RPC_LPClient
     }
 
     /**
-     * @param $email
-     * @param $password
+     * @param string $email
+     * @param string $password
      *
      * @return \Lp_RPC_Model_Customer
      *
@@ -152,14 +152,13 @@ class Lp_RPC_LPClient
     }
 
     /**
-     * @param $email
-     * @param $password
+     * @param string $email
      *
      * @return array
      *
      * @throws Exception
      */
-    public function setHasAcceptedTC($email, $password)
+    public function setHasAcceptedTC($email)
     {
         $prepareParamsMethodName = 'prepareSetHasAcceptedTC';
         $invokeObjectName        = 'user';
@@ -608,7 +607,7 @@ class Lp_RPC_LPClient
     }
 
     /**
-     * @param $result
+     * @param array $result
      *
      * @throws Exception
      */
