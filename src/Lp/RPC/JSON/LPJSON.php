@@ -664,7 +664,11 @@ class Lp_RPC_JSON_LPJSON
                         }
                     }
 
-                    return new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
+                    $customer = new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
+                    $customer->setHasAcceptedTC((bool)$login['hasAcceptedTC']);
+                    $customer->setAuthKey($login['authKey']);
+
+                    return $customer;
                 }
             }
         }

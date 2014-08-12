@@ -54,6 +54,10 @@ class Lp_RPC_Model_Customer
      * @var bool
      */
     private $_hasAcceptedTC;
+    /**
+     * @var string
+     */
+    private $_authKey;
 
     /**
      * @param string $name
@@ -117,6 +121,22 @@ class Lp_RPC_Model_Customer
     public function setApps($apps)
     {
         $this->_apps = $apps;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthKey()
+    {
+        return $this->_authKey;
+    }
+
+    /**
+     * @param string $authKey
+     */
+    public function setAuthKey($authKey)
+    {
+        $this->_authKey = $authKey;
     }
 
     /**
