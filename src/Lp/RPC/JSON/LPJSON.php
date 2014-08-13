@@ -65,6 +65,26 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param string $function
+     * @param array  $params
+     * @param bool   $isArray
+     *
+     * @return array
+     */
+    public function prepareUserAuthCall($function, $params, $isArray = false)
+    {
+        if (!$isArray) {
+            $params = array($params);
+        }
+
+        $call            = array();
+        $call['auth']    = array('key' => $params[0]['userAuthKey']);
+        $call[$function] = $params;
+
+        return $call;
+    }
+
+    /**
      * @param int                   $offset
      * @param int                   $limit
      * @param Lp_RPC_Model_FieldSet $fieldSet
@@ -395,8 +415,8 @@ class Lp_RPC_JSON_LPJSON
      */
     public function prepareSetHasAcceptedTC($email)
     {
-        $params             = array();
-        $params['email']    = $email;
+        $params          = array();
+        $params['email'] = $email;
 
         return $this->prepare('setHasAcceptedTC', $params);
     }
@@ -419,6 +439,23 @@ class Lp_RPC_JSON_LPJSON
         $params['password']               = $customer->getPassword();
 
         return $this->prepare('register', $params);
+    }
+
+
+    /**
+     * @param string           $userAuthKey
+     * @param Lp_RPC_Model_App $app
+     *
+     * @return array
+     */
+    public function prepareCreateApp($userAuthKey, \Lp_RPC_Model_App $app)
+    {
+        $params                = array();
+        $params['userAuthKey'] = $userAuthKey;
+        $params['appName']     = $app->getName();
+        $params['email']       = $app->getContactEmail();
+
+        return $this->prepareUserAuthCall('create', $params);
     }
 
     /**
@@ -665,7 +702,7 @@ class Lp_RPC_JSON_LPJSON
                     }
 
                     $customer = new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
-                    $customer->setHasAcceptedTC((bool)$login['hasAcceptedTC']);
+                    $customer->setHasAcceptedTC((bool) $login['hasAcceptedTC']);
                     $customer->setAuthKey($login['authKey']);
 
                     return $customer;

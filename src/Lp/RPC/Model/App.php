@@ -17,6 +17,11 @@ class Lp_RPC_Model_App
     protected $_name;
 
     /**
+     * @var string
+     */
+    protected $_contactEmail;
+
+    /**
      * @var string $_authClientKey
      */
     protected $_authClientKey;
@@ -71,6 +76,22 @@ class Lp_RPC_Model_App
     public function getAuthServerKey()
     {
         return $this->_authServerKey;
+    }
+
+    /**
+     * @param string $contactEmail
+     */
+    public function setContactEmail($contactEmail)
+    {
+        $this->_contactEmail = $contactEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactEmail()
+    {
+        return $this->_contactEmail;
     }
 
 }
