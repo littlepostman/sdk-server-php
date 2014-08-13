@@ -15,7 +15,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.33';
+    const LP_API_VERSION = '1.0.34';
 
     /**
      * @const LP_SERVER_PRODUCTION
@@ -536,6 +536,24 @@ class Lp_RPC_LPClient
     }
 
     /**
+     * @param string $userAuthKey
+     * @param Lp_RPC_Model_App $app
+     */
+    public function createApp($userAuthKey, \Lp_RPC_Model_App $app)
+    {
+        $prepareParamsMethodName = 'prepareCreateApp';
+        $invokeObjectName        = 'app';
+
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
+    }
+
+    /**
      * @param string $tokenType
      *
      * @throws Exception
@@ -580,6 +598,29 @@ class Lp_RPC_LPClient
         return $this->_jsonHandler->parseImportListResult($result);
     }
 
+    /**
+     * @param \Lp_RPC_JSON_LPJSON $jsonHandler
+     */
+    public function _setJsonHandler(\Lp_RPC_JSON_LPJSON $jsonHandler)
+    {
+        $this->_jsonHandler = $jsonHandler;
+    }
+
+    /**
+     * @param bool $logEnabled
+     */
+    public function _setLogEnabled($logEnabled)
+    {
+        $this->_logEnabled = (bool) $logEnabled;
+    }
+
+    /**
+     * @param string $serverUrl
+     */
+    public function _setServerUrl($serverUrl)
+    {
+        $this->_serverUrl = (string) $serverUrl;
+    }
 
     /**
      * @param string $method
@@ -600,7 +641,7 @@ class Lp_RPC_LPClient
         $this->_willSendJSON($sendJson);
 
         $receiveJson = Lp_RPC_Utils_IOUtils::post($this->_serverUrl, $sendJson, 'application/json');
-
+\pTF($receiveJson, false);
         $this->_didReceiveJSON($receiveJson);
 
         return json_decode($receiveJson, true);
@@ -645,30 +686,6 @@ class Lp_RPC_LPClient
         }
         print (date('[d.m.Y H:i:s] ') . $log . PHP_EOL);
         flush();
-    }
-
-    /**
-     * @param \Lp_RPC_JSON_LPJSON $jsonHandler
-     */
-    public function _setJsonHandler(\Lp_RPC_JSON_LPJSON $jsonHandler)
-    {
-        $this->_jsonHandler = $jsonHandler;
-    }
-
-    /**
-     * @param bool $logEnabled
-     */
-    public function _setLogEnabled($logEnabled)
-    {
-        $this->_logEnabled = (bool) $logEnabled;
-    }
-
-    /**
-     * @param string $serverUrl
-     */
-    public function _setServerUrl($serverUrl)
-    {
-        $this->_serverUrl = (string) $serverUrl;
     }
 
     /**
