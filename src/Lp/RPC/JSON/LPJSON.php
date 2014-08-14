@@ -459,6 +459,19 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param string $androidAuthKey
+     *
+     * @return array
+     */
+    public function prepareUpdateAppAndroidAuthKey($androidAuthKey)
+    {
+        $params                   = array();
+        $params['androidAuthKey'] = $androidAuthKey;
+
+        return $this->prepare('updateAppAndroidAuthKey', $params);
+    }
+
+    /**
      * @param string $tokenType
      *
      * @return array

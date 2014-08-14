@@ -11,7 +11,6 @@ require_once(realpath(dirname(__FILE__) . '/Utils/IOUtils.php'));
 
 class Lp_RPC_LPClient
 {
-
     /**
      * @const LP_API_VERSION
      */
@@ -536,13 +535,32 @@ class Lp_RPC_LPClient
     }
 
     /**
-     * @param string $userAuthKey
+     * @param string           $userAuthKey
      * @param Lp_RPC_Model_App $app
      */
     public function createApp($userAuthKey, \Lp_RPC_Model_App $app)
     {
         $prepareParamsMethodName = 'prepareCreateApp';
         $invokeObjectName        = 'app';
+
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
+    }
+
+    /**
+     * @param string $androidAuthKey
+     *
+     * @return bool
+     */
+    public function updateAppAndroidAuthKey($androidAuthKey)
+    {
+        $prepareParamsMethodName = 'prepareUpdateAppAndroidAuthKey';
+        $invokeObjectName        = 'appCredentials';
 
         return call_user_func_array(
             array($this, '_prepareParamsAndInvoke'),
@@ -641,7 +659,7 @@ class Lp_RPC_LPClient
         $this->_willSendJSON($sendJson);
 
         $receiveJson = Lp_RPC_Utils_IOUtils::post($this->_serverUrl, $sendJson, 'application/json');
-\pTF($receiveJson, false);
+
         $this->_didReceiveJSON($receiveJson);
 
         return json_decode($receiveJson, true);
@@ -711,6 +729,37 @@ class Lp_RPC_LPClient
             );
 
             $result = $this->_invoke($invokeObjectName, array($params));
+
+            $this->_validate($result);
+        } catch (Exception $e) {
+            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Debug version of the method
+     *
+     * @return NULL | array
+     *
+     * @throws Exception
+     */
+    private function _prepareParamsAndInvokeDebug()
+    {
+        $functionArgs = func_get_args();
+
+        $prepareParamsMethodName = array_shift($functionArgs);
+        $invokeObjectName        = array_shift($functionArgs);
+
+        try {
+            $params = call_user_func_array(
+                array($this->_jsonHandler, $prepareParamsMethodName),
+                $functionArgs
+            );
+
+            $result = $this->_invoke($invokeObjectName, array($params));
+            \dbg($result);
 
             $this->_validate($result);
         } catch (Exception $e) {

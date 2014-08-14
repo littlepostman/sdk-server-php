@@ -1,4 +1,5 @@
 <?php
+
 /**
  * LPApp
  *
@@ -33,17 +34,21 @@ class Lp_RPC_Model_App
 
 
     /**
-     * @param $id
-     * @param $name
-     * @param $authClientKey
-     * @param $authServerKey
+     * @param int    $id
+     * @param string $name
+     * @param string $authClientKey
+     * @param string $authServerKey
      */
-    public function __construct ($id, $name, $authClientKey, $authServerKey)
+    public function __construct($id, $name, $authClientKey, $authServerKey)
     {
-        $this->_id              = $id;
-        $this->_name            = $name;
-        $this->_authClientKey   = $authClientKey;
-        $this->_authServerKey   = $authServerKey;
+        if (empty($name) || !is_string($name)) {
+            throw new \Exception('Invalid app name');
+        }
+
+        $this->_id            = $id;
+        $this->_name          = $name;
+        $this->_authClientKey = $authClientKey;
+        $this->_authServerKey = $authServerKey;
     }
 
     /**
@@ -93,5 +98,4 @@ class Lp_RPC_Model_App
     {
         return $this->_contactEmail;
     }
-
 }
