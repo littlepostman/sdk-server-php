@@ -555,11 +555,32 @@ class Lp_RPC_LPClient
     /**
      * @param string $androidAuthKey
      *
-     * @return bool
+     * @return array
      */
     public function updateAppAndroidAuthKey($androidAuthKey)
     {
         $prepareParamsMethodName = 'prepareUpdateAppAndroidAuthKey';
+        $invokeObjectName        = 'appCredentials';
+
+        return call_user_func_array(
+            array($this, '_prepareParamsAndInvoke'),
+            array_merge(
+                array($prepareParamsMethodName, $invokeObjectName),
+                func_get_args()
+            )
+        );
+    }
+
+    /**
+     * @param string $iOSCertFileContentsBase64
+     * @param string $deviceEnv
+     * @param string $passphrase
+     *
+     * @return array
+     */
+    public function updateAppIOSCert($iOSCertFileContentsBase64, $deviceEnv, $passphrase = '')
+    {
+        $prepareParamsMethodName = 'prepareUpdateAppIOSCert';
         $invokeObjectName        = 'appCredentials';
 
         return call_user_func_array(
@@ -759,6 +780,9 @@ class Lp_RPC_LPClient
             );
 
             $result = $this->_invoke($invokeObjectName, array($params));
+
+            // @NB: this debug is placed here intentionally
+            // (this method should only be used for testing purposes)
             \dbg($result);
 
             $this->_validate($result);

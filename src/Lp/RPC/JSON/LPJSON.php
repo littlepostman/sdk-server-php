@@ -472,6 +472,23 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param string $iOSCertFileContentsBase64
+     * @param string $deviceEnv
+     * @param string $passphrase
+     *
+     * @return array
+     */
+    public function prepareUpdateAppIOSCert($iOSCertFileContentsBase64, $deviceEnv, $passphrase = '')
+    {
+        $params                              = [];
+        $params['iOSCertFileContentsBase64'] = $iOSCertFileContentsBase64;
+        $params['deviceEnv']                 = $deviceEnv;
+        $params['passphrase']                = $passphrase;
+
+        return $this->prepare('updateAppIOSCert', $params);
+    }
+
+    /**
      * @param string $tokenType
      *
      * @return array
