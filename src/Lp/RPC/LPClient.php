@@ -695,7 +695,13 @@ class Lp_RPC_LPClient
     {
         $errors = $this->_jsonHandler->parseError($result);
         if (!empty($errors)) {
-            throw new Exception ('Unexpected exception occurred while parsing API errors');
+            $error = '';
+            if (is_array($errors[0])) {
+                $error = $errors[0][0];
+            } else {
+                $error = $errors[0];
+            }
+            throw new Exception ('Unexpected exception occurred while parsing API errors: ' . $error);
         }
     }
 
@@ -753,7 +759,7 @@ class Lp_RPC_LPClient
 
             $this->_validate($result);
         } catch (Exception $e) {
-            throw new Exception(self::EXCEPTION_TEXT, 0, $e);
+            throw new Exception(self::EXCEPTION_TEXT . ': ' . $e->getMessage(), 0, $e);
         }
 
         return $result;
