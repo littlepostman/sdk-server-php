@@ -14,19 +14,27 @@ class Lp_RPC_Model_Field
     protected $descriptiveName;
 
     /**
+     * @var bool
+     */
+    protected $tagBased;
+
+
+    /**
      * @param string $name
      * @param string $descriptiveName
+     * @param bool   $tagBased
      */
-    public function __construct ($name, $descriptiveName)
+    public function __construct($name, $descriptiveName, $tagBased = false)
     {
         $this->name            = $name;
         $this->descriptiveName = $descriptiveName;
+        $this->tagBased        = $tagBased;
     }
 
     /**
      * @return string
      */
-    public function getName ()
+    public function getName()
     {
         return $this->name;
     }
@@ -34,7 +42,7 @@ class Lp_RPC_Model_Field
     /**
      * @return string
      */
-    public function getDescriptiveName ()
+    public function getDescriptiveName()
     {
         return $this->descriptiveName;
     }
@@ -42,7 +50,7 @@ class Lp_RPC_Model_Field
     /**
      * @param string $name
      */
-    public function setName ($name)
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -50,9 +58,24 @@ class Lp_RPC_Model_Field
     /**
      * @param string $descriptiveName
      */
-    public function setDescriptiveName ($descriptiveName)
+    public function setDescriptiveName($descriptiveName)
     {
         $this->descriptiveName = $descriptiveName;
     }
 
+    /**
+     * @return boolean
+     */
+    public function getTagBased()
+    {
+        return $this->tagBased;
+    }
+
+    /**
+     * @param boolean $tagBased
+     */
+    public function setTagBased($tagBased)
+    {
+        $this->tagBased = $tagBased;
+    }
 }
