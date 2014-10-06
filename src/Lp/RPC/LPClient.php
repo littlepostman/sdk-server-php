@@ -696,7 +696,18 @@ class Lp_RPC_LPClient
     {
         $errors = $this->_jsonHandler->parseError($result);
         if (!empty($errors)) {
-            throw new Lp_RPC_LPException('RPC API result contains errors', null, null, $errors);
+            $error = '';
+            if (is_array($errors[0])) {
+                $error = $errors[0][0];
+            } else {
+                $error = $errors[0];
+            }
+
+            if (empty($error)) {
+                $error = 'RPC API result contains errors';
+            }
+
+            throw new Lp_RPC_LPException($error, null, null, $errors);
         }
     }
 
