@@ -637,7 +637,9 @@ class Lp_RPC_JSON_LPJSON
                 foreach ($list as $array) {
                     foreach ($array as $value) {
                         $descriptiveName = !empty($value['descriptiveName']) ? $value['descriptiveName'] : '';
-                        $fields[]        = new Lp_RPC_Model_Field($value['name'], $descriptiveName);
+                        $tagBased        = (bool) ($value['tagBased']);
+
+                        $fields[]        = new Lp_RPC_Model_Field($value['name'], $descriptiveName, $tagBased);
                     }
                 }
             }
