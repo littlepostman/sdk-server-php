@@ -73,9 +73,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'deviceFilter';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -94,9 +94,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'field';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -113,9 +113,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'deviceFilter';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -135,9 +135,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'user';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -164,9 +164,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'user';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -187,9 +187,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'device';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -211,9 +211,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'deviceFilter';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -231,14 +231,14 @@ class Lp_RPC_LPClient
     public function getDeviceFilterCriteriaCalcByDeviceFilters($deviceFilterOrArrayOfDeviceFilters)
     {
         if (!is_array($deviceFilterOrArrayOfDeviceFilters)) {
-            $deviceFilterOrArrayOfDeviceFilters = array($deviceFilterOrArrayOfDeviceFilters);
+            $deviceFilterOrArrayOfDeviceFilters = [$deviceFilterOrArrayOfDeviceFilters];
         }
 
         if (!empty($deviceFilterOrArrayOfDeviceFilters)) {
             try {
 
                 $params = $this->_jsonHandler->prepareDeviceFilterCalcCriteriaCall($deviceFilterOrArrayOfDeviceFilters);
-                $result = $this->_invoke('deviceFilter', array($params));
+                $result = $this->_invoke('deviceFilter', [$params]);
                 $this->_validate($result);
 
                 return $this->_jsonHandler->parseDeviceFilterCalcCriteriaResult($deviceFilterOrArrayOfDeviceFilters, $result);
@@ -264,9 +264,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'field';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -288,9 +288,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'message';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -311,9 +311,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'message';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -335,9 +335,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'statistics';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -359,16 +359,16 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'push';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
     }
 
     /**
-     * @param Lp_RPC_Model_Device $device
+     * @param \Lp_RPC_Model_Device $device
      *
      * @throws Exception
      */
@@ -378,9 +378,29 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'device';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
+                func_get_args()
+            )
+        );
+    }
+
+    /**
+     * @param \Lp_RPC_Model_Device $device
+     * @param string               $lpUid
+     *
+     * @throws Exception
+     */
+    public function convertOptedOutDevice($device, $lpUid)
+    {
+        $prepareParamsMethodName = 'prepareConvertOptedOutDeviceCall';
+        $invokeObjectName        = 'device';
+
+        return call_user_func_array(
+            [$this, '_prepareParamsAndInvoke'],
+            array_merge(
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -398,9 +418,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'device';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -422,9 +442,9 @@ class Lp_RPC_LPClient
 
         // prepare the params and invoke with the arguments passed to the current method
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -442,9 +462,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'device';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -462,9 +482,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'response';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -481,9 +501,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'device';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -502,9 +522,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'deviceFilter';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -525,9 +545,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'customer';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -545,9 +565,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'app';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -564,9 +584,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'appCredentials';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -585,9 +605,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'appCredentials';
 
         return call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -604,9 +624,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'token';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -628,9 +648,9 @@ class Lp_RPC_LPClient
         $invokeObjectName        = 'import';
 
         $result = call_user_func_array(
-            array($this, '_prepareParamsAndInvoke'),
+            [$this, '_prepareParamsAndInvoke'],
             array_merge(
-                array($prepareParamsMethodName, $invokeObjectName),
+                [$prepareParamsMethodName, $invokeObjectName],
                 func_get_args()
             )
         );
@@ -670,7 +690,7 @@ class Lp_RPC_LPClient
      */
     protected function _invoke($method, $params)
     {
-        $rpc            = array();
+        $rpc            = [];
         $rpc['jsonrpc'] = '2.0';
         $rpc['method']  = $method;
         $rpc['params']  = $params;
@@ -757,11 +777,11 @@ class Lp_RPC_LPClient
 
         try {
             $params = call_user_func_array(
-                array($this->_jsonHandler, $prepareParamsMethodName),
+                [$this->_jsonHandler, $prepareParamsMethodName],
                 $functionArgs
             );
 
-            $result = $this->_invoke($invokeObjectName, array($params));
+            $result = $this->_invoke($invokeObjectName, [$params]);
 
             $this->_validate($result);
         } catch (Exception $e) {
@@ -787,11 +807,11 @@ class Lp_RPC_LPClient
 
         try {
             $params = call_user_func_array(
-                array($this->_jsonHandler, $prepareParamsMethodName),
+                [$this->_jsonHandler, $prepareParamsMethodName],
                 $functionArgs
             );
 
-            $result = $this->_invoke($invokeObjectName, array($params));
+            $result = $this->_invoke($invokeObjectName, [$params]);
 
             // @NB: this debug is placed here intentionally
             // (this method should only be used for testing purposes)

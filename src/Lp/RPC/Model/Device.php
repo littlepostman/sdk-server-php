@@ -12,129 +12,152 @@ class Lp_RPC_Model_Device
 {
 
     /**
-     * @var string $_uid
+     * @var string $uid
      */
-    protected $_uid;
+    protected $uid;
 
     /**
-     * @var string $_type
+     * @var string $type
      */
-    protected $_type;
+    protected $type;
 
     /**
-     * @var string $_environment
+     * @var string $environment
      */
-    protected $_environment;
+    protected $environment;
 
     /**
-     * @var Lp_RPC_Model_FieldSet $_fieldSet
+     * @var \Lp_RPC_Model_Fieldset $fieldSet
      */
-    protected $_fieldSet;
+    protected $fieldSet;
 
     /**
-     * @var string $_infoHardware
+     * @var string $infoHardware
      */
-    protected $_infoHardware;
+    protected $infoHardware;
 
     /**
-     * @var string $_infoSystem
+     * @var string $infoSystem
      */
-    protected $_infoSystem;
+    protected $infoSystem;
 
     /**
-     * @var string $_infoSystemLanguage
+     * @var string $infoSystemLanguage
      */
-    protected $_infoSystemLanguage;
+    protected $infoSystemLanguage;
 
     /**
-     * @var string $_infoTimezone
+     * @var string $infoTimezone
      */
-    protected $_infoTimezone;
+    protected $infoTimezone;
 
     /**
-     * @param string                $uid
-     * @param string                $type
-     * @param string                $environment
-     * @param Lp_RPC_Model_FieldSet $fieldSet
-     * @param string                $infoHardware
-     * @param string                $infoSystem
-     * @param string                $infoSystemLanguage
-     * @param string                $infoTimezone
+     * @var bool
      */
-    public function __construct ($uid, $type, $environment, $fieldSet = null, $infoHardware = null, $infoSystem = null, $infoSystemLanguage = null, $infoTimezone = null)
-    {
-        $this->_uid                = $uid;
-        $this->_type               = $type;
-        $this->_environment        = $environment;
-        $this->_fieldSet           = is_null($fieldSet) ? new Lp_RPC_Model_FieldSet() : $fieldSet;
-        $this->_infoHardware       = $infoHardware;
-        $this->_infoSystem         = $infoSystem;
-        $this->_infoSystemLanguage = $infoSystemLanguage;
-        $this->_infoTimezone       = $infoTimezone;
+    private $optedOut;
+
+
+    /**
+     * @param string                 $uid
+     * @param string                 $type
+     * @param string                 $environment
+     * @param \Lp_RPC_Model_Fieldset $fieldSet
+     * @param string                 $infoHardware
+     * @param string                 $infoSystem
+     * @param string                 $infoSystemLanguage
+     * @param string                 $infoTimezone
+     * @param int                    $optedOut
+     */
+    public function __construct($uid,
+        $type,
+        $environment,
+        $fieldSet = null,
+        $infoHardware = null,
+        $infoSystem = null,
+        $infoSystemLanguage = null,
+        $infoTimezone = null,
+        $optedOut = 0
+    ) {
+        $this->uid                = $uid;
+        $this->type               = $type;
+        $this->environment        = $environment;
+        $this->fieldSet           = is_null($fieldSet) ? new \Lp_RPC_Model_Fieldset() : $fieldSet;
+        $this->infoHardware       = $infoHardware;
+        $this->infoSystem         = $infoSystem;
+        $this->infoSystemLanguage = $infoSystemLanguage;
+        $this->infoTimezone       = $infoTimezone;
+        $this->optedOut           = (int) $optedOut;
     }
 
     /**
      * @return string
      */
-    public function getUid ()
+    public function getUid()
     {
-        return $this->_uid;
+        return $this->uid;
     }
 
     /**
      * @return string
      */
-    public function getType ()
+    public function getType()
     {
-        return $this->_type;
+        return $this->type;
     }
 
     /**
      * @return string
      */
-    public function getEnvironment ()
+    public function getEnvironment()
     {
-        return $this->_environment;
+        return $this->environment;
     }
 
     /**
-     * @return Lp_RPC_Model_FieldSet
+     * @return Lp_RPC_ModelfieldSet
      */
-    public function getFieldSet ()
+    public function getFieldSet()
     {
-        return $this->_fieldSet;
-    }
-
-    /**
-     * @return string
-     */
-    public function getInfoHardware ()
-    {
-        return $this->_infoHardware;
+        return $this->fieldSet;
     }
 
     /**
      * @return string
      */
-    public function getInfoSystem ()
+    public function getInfoHardware()
     {
-        return $this->_infoSystem;
+        return $this->infoHardware;
     }
 
     /**
      * @return string
      */
-    public function getInfoSystemLanguage ()
+    public function getInfoSystem()
     {
-        return $this->_infoSystemLanguage;
+        return $this->infoSystem;
     }
 
     /**
      * @return string
      */
-    public function getInfoTimezone ()
+    public function getInfoSystemLanguage()
     {
-        return $this->_infoTimezone;
+        return $this->infoSystemLanguage;
     }
 
+    /**
+     * @return string
+     */
+    public function getInfoTimezone()
+    {
+        return $this->infoTimezone;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getOptedOut()
+    {
+        return $this->optedOut;
+    }
 }

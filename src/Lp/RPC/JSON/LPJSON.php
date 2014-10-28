@@ -107,7 +107,7 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
-     * @param Lp_RPC_Model_Device $device
+     * @param \Lp_RPC_Model_Device $device
      *
      * @return array
      */
@@ -121,8 +121,30 @@ class Lp_RPC_JSON_LPJSON
         $params['infoSystem']         = $device->getInfoSystem();
         $params['infoSystemLanguage'] = $device->getInfoSystemLanguage();
         $params['infoTimezone']       = $device->getInfoTimezone();
+        $params['optedOut']           = $device->getOptedOut();
 
         return $this->prepare('register', $params);
+    }
+
+    /**
+     * @param \Lp_RPC_Model_Device $device
+     * @param string               $lpUid
+     *
+     * @return array
+     */
+    public function prepareConvertOptedOutDeviceCall($device, $lpUid)
+    {
+        $params                       = [];
+        $params['env']                = $device->getEnvironment();
+        $params['type']               = $device->getType();
+        $params['uid']                = $device->getUid();
+        $params['infoHardware']       = $device->getInfoHardware();
+        $params['infoSystem']         = $device->getInfoSystem();
+        $params['infoSystemLanguage'] = $device->getInfoSystemLanguage();
+        $params['infoTimezone']       = $device->getInfoTimezone();
+        $params['lpUid']              = $lpUid;
+
+        return $this->prepare('convertOptedOutDevice', $params);
     }
 
     /**
@@ -639,7 +661,7 @@ class Lp_RPC_JSON_LPJSON
                         $descriptiveName = !empty($value['descriptiveName']) ? $value['descriptiveName'] : '';
                         $tagBased        = (bool) ($value['tagBased']);
 
-                        $fields[]        = new Lp_RPC_Model_Field($value['name'], $descriptiveName, $tagBased);
+                        $fields[] = new Lp_RPC_Model_Field($value['name'], $descriptiveName, $tagBased);
                     }
                 }
             }
