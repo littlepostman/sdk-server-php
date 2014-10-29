@@ -148,6 +148,27 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param \Lp_RPC_Model_Device $device
+     * @param string               $oldDeviceUid
+     *
+     * @return array
+     */
+    public function prepareOptOutRegisteredDeviceCall($device, $oldDeviceUid)
+    {
+        $params                       = [];
+        $params['env']                = $device->getEnvironment();
+        $params['type']               = $device->getType();
+        $params['uid']                = $device->getUid();
+        $params['infoHardware']       = $device->getInfoHardware();
+        $params['infoSystem']         = $device->getInfoSystem();
+        $params['infoSystemLanguage'] = $device->getInfoSystemLanguage();
+        $params['infoTimezone']       = $device->getInfoTimezone();
+        $params['oldDeviceUid']       = $oldDeviceUid;
+
+        return $this->prepare('optOutRegisteredDevice', $params);
+    }
+
+    /**
      * @param Lp_RPC_Model_Device $device
      * @param string              $eventType
      *
@@ -357,13 +378,15 @@ class Lp_RPC_JSON_LPJSON
      * @param array|string                                    $type
      * @param string                                          $env
      * @param Lp_RPC_Model_FieldSet|Lp_RPC_Model_DeviceFilter $fieldSetOrDeviceFilter
+     * @param bool                                            $inboxOnly
      *
      * @return array
      */
-    public function preparePushSendCall($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null)
+    public function preparePushSendCall($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null, $inboxOnly = false)
     {
-        $params            = [];
-        $params['message'] = $this->buildPushSendMessageCreateArray($message);
+        $params              = [];
+        $params['message']   = $this->buildPushSendMessageCreateArray($message);
+        $params['inboxOnly'] = $inboxOnly;
 
         $groups = $this->buildPushSendGroupArray($type, $env);
 

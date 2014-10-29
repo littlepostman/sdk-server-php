@@ -350,10 +350,11 @@ class Lp_RPC_LPClient
      * @param array|string                                    $type
      * @param string                                          $env
      * @param Lp_RPC_Model_FieldSet|Lp_RPC_Model_DeviceFilter $fieldSetOrDeviceFilter
+     * @param bool                                            $inboxOnly
      *
      * @throws Exception
      */
-    public function pushMessage($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null)
+    public function pushMessage($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null, $inboxOnly = false)
     {
         $prepareParamsMethodName = 'preparePushSendCall';
         $invokeObjectName        = 'push';
@@ -395,6 +396,26 @@ class Lp_RPC_LPClient
     public function convertOptedOutDevice($device, $lpUid)
     {
         $prepareParamsMethodName = 'prepareConvertOptedOutDeviceCall';
+        $invokeObjectName        = 'device';
+
+        return call_user_func_array(
+            [$this, '_prepareParamsAndInvoke'],
+            array_merge(
+                [$prepareParamsMethodName, $invokeObjectName],
+                func_get_args()
+            )
+        );
+    }
+
+    /**
+     * @param \Lp_RPC_Model_Device $device
+     * @param string               $oldDeviceUid
+     *
+     * @throws Exception
+     */
+    public function optOutRegisteredDevice($device, $oldDeviceUid)
+    {
+        $prepareParamsMethodName = 'prepareOptOutRegisteredDeviceCall';
         $invokeObjectName        = 'device';
 
         return call_user_func_array(
