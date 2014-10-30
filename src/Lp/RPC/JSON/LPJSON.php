@@ -107,7 +107,7 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
-     * @param Lp_RPC_Model_Device $device
+     * @param \Lp_RPC_Model_Device $device
      *
      * @return array
      */
@@ -121,8 +121,51 @@ class Lp_RPC_JSON_LPJSON
         $params['infoSystem']         = $device->getInfoSystem();
         $params['infoSystemLanguage'] = $device->getInfoSystemLanguage();
         $params['infoTimezone']       = $device->getInfoTimezone();
+        $params['optedOut']           = $device->getOptedOut();
 
         return $this->prepare('register', $params);
+    }
+
+    /**
+     * @param \Lp_RPC_Model_Device $device
+     * @param string               $lpUid
+     *
+     * @return array
+     */
+    public function prepareConvertOptedOutDeviceCall($device, $lpUid)
+    {
+        $params                       = [];
+        $params['env']                = $device->getEnvironment();
+        $params['type']               = $device->getType();
+        $params['uid']                = $device->getUid();
+        $params['infoHardware']       = $device->getInfoHardware();
+        $params['infoSystem']         = $device->getInfoSystem();
+        $params['infoSystemLanguage'] = $device->getInfoSystemLanguage();
+        $params['infoTimezone']       = $device->getInfoTimezone();
+        $params['lpUid']              = $lpUid;
+
+        return $this->prepare('convertOptedOutDevice', $params);
+    }
+
+    /**
+     * @param \Lp_RPC_Model_Device $device
+     * @param string               $oldDeviceUid
+     *
+     * @return array
+     */
+    public function prepareOptOutRegisteredDeviceCall($device, $oldDeviceUid)
+    {
+        $params                       = [];
+        $params['env']                = $device->getEnvironment();
+        $params['type']               = $device->getType();
+        $params['uid']                = $device->getUid();
+        $params['infoHardware']       = $device->getInfoHardware();
+        $params['infoSystem']         = $device->getInfoSystem();
+        $params['infoSystemLanguage'] = $device->getInfoSystemLanguage();
+        $params['infoTimezone']       = $device->getInfoTimezone();
+        $params['oldDeviceUid']       = $oldDeviceUid;
+
+        return $this->prepare('optOutRegisteredDevice', $params);
     }
 
     /**
@@ -335,13 +378,15 @@ class Lp_RPC_JSON_LPJSON
      * @param array|string                                    $type
      * @param string                                          $env
      * @param Lp_RPC_Model_FieldSet|Lp_RPC_Model_DeviceFilter $fieldSetOrDeviceFilter
+     * @param bool                                            $inboxOnly
      *
      * @return array
      */
-    public function preparePushSendCall($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null)
+    public function preparePushSendCall($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null, $inboxOnly = false)
     {
-        $params            = [];
-        $params['message'] = $this->buildPushSendMessageCreateArray($message);
+        $params              = [];
+        $params['message']   = $this->buildPushSendMessageCreateArray($message);
+        $params['inboxOnly'] = $inboxOnly;
 
         $groups = $this->buildPushSendGroupArray($type, $env);
 
@@ -639,7 +684,7 @@ class Lp_RPC_JSON_LPJSON
                         $descriptiveName = !empty($value['descriptiveName']) ? $value['descriptiveName'] : '';
                         $tagBased        = (bool) ($value['tagBased']);
 
-                        $fields[]        = new Lp_RPC_Model_Field($value['name'], $descriptiveName, $tagBased);
+                        $fields[] = new Lp_RPC_Model_Field($value['name'], $descriptiveName, $tagBased);
                     }
                 }
             }
