@@ -1,5 +1,8 @@
 <?php
 
+use \Lp\RPC\Model\User;
+
+
 /**
  * LPJSON
  *
@@ -504,6 +507,80 @@ class Lp_RPC_JSON_LPJSON
         return $this->prepareUserAuthCall('create', $params);
     }
 
+
+    /**
+     * @param string $userAuthKey
+     * @param User   $user
+     *
+     * @return array
+     */
+    public function prepareCreateUser($userAuthKey, User $user)
+    {
+        $params                = [];
+        $params['userAuthKey'] = $userAuthKey;
+
+        $params['email']          = $user->getEmail();
+        $params['password']       = $user->getPassword();
+        $params['name']           = $user->getName();
+        $params['isAccountAdmin'] = $user->getIsAccountAdmin();
+
+        return $this->prepareUserAuthCall('create', $params);
+    }
+
+
+    /**
+     * @param string $userAuthKey
+     * @param User   $user
+     *
+     * @return array
+     */
+    public function prepareUpdateUser($userAuthKey, User $user)
+    {
+        $params                = [];
+        $params['userAuthKey'] = $userAuthKey;
+
+        $params['id']             = $user->getId();
+        $params['email']          = $user->getEmail();
+        $params['password']       = $user->getPassword();
+        $params['name']           = $user->getName();
+        $params['isAccountAdmin'] = $user->getIsAccountAdmin();
+
+        return $this->prepareUserAuthCall('update', $params);
+    }
+
+
+    /**
+     * @param string   $userAuthKey
+     * @param password $password
+     *
+     * @return array
+     */
+    public function prepareUpdateOwnPassword($userAuthKey, $password)
+    {
+        $params = [
+            'userAuthKey' => $userAuthKey,
+            'password'    => $password
+        ];
+
+        return $this->prepareUserAuthCall('updateOwnPassword', $params);
+    }
+
+
+    /**
+     * @param string $userAuthKey
+     * @param int    $userId
+     *
+     * @return array
+     */
+    public function prepareDeleteUser($userAuthKey, $userId)
+    {
+        $params                = [];
+        $params['userAuthKey'] = $userAuthKey;
+        $params['userId']      = $userId;
+
+        return $this->prepareUserAuthCall('delete', $params);
+    }
+
     /**
      * @param string $androidAuthKey
      *
@@ -774,30 +851,53 @@ class Lp_RPC_JSON_LPJSON
      */
     public static function parseUserLoginResult($object)
     {
-        if (array_key_exists('result', $object)) {
-            if (array_key_exists('login', $object['result'])) {
-                $login = $object['result']['login'][0];
-                if (is_array($login)) {
-                    $apps = [];
-                    if (array_key_exists('apps', $login)) {
-                        foreach ($login['apps'] as $app) {
-                            if (is_array($app)) {
-                                $apps[] =
-                                    new Lp_RPC_Model_App(((int) $app['id']), $app['name'], $app['authKeyClient'], $app['authKeyServer']);
-                            }
-                        }
-                    }
+        if (!array_key_exists('result', $object)
+            || !array_key_exists('login', $object['result'])
+        ) {
+            return null;
+        }
 
-                    $customer = new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
-                    $customer->setHasAcceptedTC((bool) $login['hasAcceptedTC']);
-                    $customer->setAuthKey($login['authKey']);
+        $login = $object['result']['login'][0];
+        if (!is_array($login)) {
+            return null;
+        }
 
-                    return $customer;
+        $apps = [];
+        if (array_key_exists('apps', $login)) {
+            foreach ($login['apps'] as $app) {
+                if (is_array($app)) {
+                    $apps[] =
+                        new Lp_RPC_Model_App(((int) $app['id']), $app['name'], $app['authKeyClient'], $app['authKeyServer']);
                 }
             }
         }
 
-        return null;
+        $users = [];
+        if (array_key_exists('users', $login)) {
+            foreach ($login['users'] as $user) {
+                if (is_array($user)) {
+                    $users[] =
+
+                        // @NB: we don't know the user password at this stage. Only the hash. So use
+                        // an empty string.
+                        new User(
+                            $user['id'],
+                            $user['userEmail'],
+                            '',
+                            $user['name'],
+                            $user['isAccountAdmin']
+                        );
+                }
+            }
+        }
+
+        $customer = new Lp_RPC_Model_Customer($login['name'], $login['consoleLogo'], $apps);
+        $customer->setHasAcceptedTC((bool) $login['hasAcceptedTC']);
+        $customer->setAuthKey($login['authKey']);
+        $customer->setUsers($users);
+        $customer->setIsAccountAdmin($login['isAccountAdmin']);
+
+        return $customer;
     }
 
     /**
