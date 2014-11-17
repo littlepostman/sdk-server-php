@@ -22,6 +22,11 @@ class Lp_RPC_Model_Customer
     protected $_apps;
 
     /**
+     * @var array
+     */
+    private $users;
+
+    /**
      * @var string
      */
     private $_email;
@@ -54,6 +59,10 @@ class Lp_RPC_Model_Customer
      * @var bool
      */
     private $_hasAcceptedTC;
+    /**
+     * @var bool
+     */
+    private $isAccountAdmin;
     /**
      * @var string
      */
@@ -121,6 +130,22 @@ class Lp_RPC_Model_Customer
     public function setApps($apps)
     {
         $this->_apps = $apps;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param array $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
     }
 
     /**
@@ -265,5 +290,21 @@ class Lp_RPC_Model_Customer
     public function setPassword($password)
     {
         $this->_password = $password;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsAccountAdmin()
+    {
+        return $this->isAccountAdmin;
+    }
+
+    /**
+     * @param boolean $isAccountAdmin
+     */
+    public function setIsAccountAdmin($isAccountAdmin)
+    {
+        $this->isAccountAdmin = $isAccountAdmin;
     }
 }
