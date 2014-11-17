@@ -361,6 +361,36 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param \Lp_RPC_Model_MessageDetails $messageDetails
+     *
+     * @return array
+     */
+    public function prepareUpdateMessage(\Lp_RPC_Model_MessageDetails $messageDetails)
+    {
+        $params = [
+            'id'                    => $messageDetails->getId(),
+            '_content'              => $messageDetails->getContent(),
+            '_data'                 => $messageDetails->getData(),
+            '_extendedData'         => $messageDetails->getExtendedData(),
+            'pushData'              => $messageDetails->getPushData(),
+            '_expiry'               => $messageDetails->getExpiry(),
+            '_schedule'             => $messageDetails->getScheduleDate(),
+            'inboxOnly'             => $messageDetails->getInboxOnly(),
+            'iosExpiry'             => $messageDetails->getIosExpiry(),
+            'iosAlert'              => $messageDetails->getIosAlert(),
+            'iosBadge'              => $messageDetails->getIosBadge(),
+            'iosSound'              => $messageDetails->getIosSound(),
+            'iosData'               => $messageDetails->getIosData(),
+            'androidTimeToLive'     => $messageDetails->getAndroidTimeToLive(),
+            'androidDelayWhileIdle' => $messageDetails->getAndroidDelayWhileIdle(),
+            'androidCollapseKey'    => $messageDetails->getAndroidCollapseKey(),
+            'androidData'           => $messageDetails->getAndroidData()
+        ];
+
+        return $this->prepare('update', $params, true);
+    }
+
+    /**
      * @param int $offset
      * @param int $limit
      *
@@ -777,23 +807,43 @@ class Lp_RPC_JSON_LPJSON
      */
     public static function parseMessageDetailsResult($object)
     {
+        /** @var \Lp_RPC_Model_MessageDetails[] $messages */
         $messages = [];
-        if (array_key_exists('result', $object)) {
-            if (array_key_exists('details', $object['result'])) {
-                $details = $object['result']['details'];
-                foreach ($details as $array) {
-                    if (array_key_exists('content', $array) && array_key_exists('data', $array)
-                        && array_key_exists('extendedData',
-                            $array
-                        )
-                    ) {
-                        $messages[] = new Lp_RPC_Model_MessageDetails($array['id'],
-                            $array['content'],
-                            json_decode($array['data'], true),
-                            json_decode($array['extendedData'], true)
-                        );
-                    }
-                }
+        if (!array_key_exists('result', $object)
+            || !array_key_exists('details', $object['result'])
+        ) {
+            return $messages;
+        }
+
+        $details      = $object['result']['details'];
+        $messageIndex = 0;
+        foreach ($details as $array) {
+            if (array_key_exists('content', $array) && array_key_exists('data', $array)
+                && array_key_exists('extendedData',
+                    $array
+                )
+            ) {
+                $messages[$messageIndex] = new Lp_RPC_Model_MessageDetails($array['id'],
+                    $array['content'],
+                    json_decode($array['data'], true),
+                    json_decode($array['extendedData'], true)
+                );
+
+                $messages[$messageIndex]->setPushData(json_decode($array['pushData'], true));
+                $messages[$messageIndex]->setExpiry($array['expiry']);
+                $messages[$messageIndex]->setScheduleDate($array['schedule']);
+                $messages[$messageIndex]->setInboxOnly($array['inboxOnly']);
+                $messages[$messageIndex]->setIosExpiry($array['iosExpiry']);
+                $messages[$messageIndex]->setIosAlert($array['iosAlert']);
+                $messages[$messageIndex]->setIosBadge($array['iosBadge']);
+                $messages[$messageIndex]->setIosSound($array['iosSound']);
+                $messages[$messageIndex]->setIosData($array['iosData']);
+                $messages[$messageIndex]->setAndroidTimeToLive($array['androidTimeToLive']);
+                $messages[$messageIndex]->setAndroidDelayWhileIdle($array['androidDelayWhileIdle']);
+                $messages[$messageIndex]->setAndroidCollapseKey($array['androidCollapseKey']);
+                $messages[$messageIndex]->setAndroidData($array['androidData']);
+
+                $messageIndex++;
             }
         }
 

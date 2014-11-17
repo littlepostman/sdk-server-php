@@ -327,6 +327,21 @@ class Lp_RPC_LPClient
     }
 
     /**
+     * @param \Lp_RPC_Model_MessageDetails $messageDetails
+     */
+    public function updateMessage(\Lp_RPC_Model_MessageDetails $messageDetails)
+    {
+        $prepareParamsMethodName = 'prepareUpdateMessage';
+        $invokeObjectName        = 'message';
+
+        return $this->prepareParamsAndInvokeCallback->__invoke(
+            $prepareParamsMethodName,
+            $invokeObjectName,
+            func_get_args()
+        );
+    }
+
+    /**
      * @param DateTime $startDate
      * @param DateTime $endDate
      *
