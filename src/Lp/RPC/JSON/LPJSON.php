@@ -391,6 +391,20 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
+     * @param int $messageId
+     *
+     * @return array
+     */
+    public function prepareDeleteMessage($messageId)
+    {
+        $params = [
+            'id' => $messageId
+        ];
+
+        return $this->prepare('delete', $params, true);
+    }
+
+    /**
      * @param int $offset
      * @param int $limit
      *

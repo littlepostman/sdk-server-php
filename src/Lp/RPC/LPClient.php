@@ -18,7 +18,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.44';
+    const LP_API_VERSION = '1.0.43';
 
     /**
      * @const LP_SERVER_PRODUCTION
@@ -332,6 +332,21 @@ class Lp_RPC_LPClient
     public function updateMessage(\Lp_RPC_Model_MessageDetails $messageDetails)
     {
         $prepareParamsMethodName = 'prepareUpdateMessage';
+        $invokeObjectName        = 'message';
+
+        return $this->prepareParamsAndInvokeCallback->__invoke(
+            $prepareParamsMethodName,
+            $invokeObjectName,
+            func_get_args()
+        );
+    }
+
+    /**
+     * @param int $messageId
+     */
+    public function deleteMessage($messageId)
+    {
+        $prepareParamsMethodName = 'prepareDeleteMessage';
         $invokeObjectName        = 'message';
 
         return $this->prepareParamsAndInvokeCallback->__invoke(
