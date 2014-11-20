@@ -34,6 +34,12 @@ class Lp_RPC_Utils_IOUtils
         curl_setopt($curl, CURLOPT_POST, TRUE);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+
+        // To be used *only* while developing
+        if (\Lp_RPC_LPClient::DEBUG_MODE) {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl, CURLOPT_URL, $url);
 
