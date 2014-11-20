@@ -21,6 +21,11 @@ class Lp_RPC_LPClient
     const LP_API_VERSION = '1.0.45';
 
     /**
+     * @const bool DEBUG_MODE
+     */
+    const DEBUG_MODE = false;
+
+    /**
      * @const LP_SERVER_PRODUCTION
      */
     const LP_SERVER_PRODUCTION = 'https://api.littlepostman.com/rpc-api/';
