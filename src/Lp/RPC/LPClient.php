@@ -18,7 +18,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.46';
+    const LP_API_VERSION = '1.0.47';
 
     /**
      * @const bool DEBUG_MODE
@@ -647,6 +647,23 @@ class Lp_RPC_LPClient
     public function updateOwnPassword($userAuthKey, $password)
     {
         $prepareParamsMethodName = 'prepareUpdateOwnPassword';
+        $invokeObjectName        = 'userAdditional';
+
+        return $this->prepareParamsAndInvokeCallback->__invoke(
+            $prepareParamsMethodName,
+            $invokeObjectName,
+            func_get_args()
+        );
+    }
+
+    /**
+     * @param string $userAuthKey
+     * @param string $email
+     * @param string $password
+     */
+    public function sendWelcomeEmail($userAuthKey, $email, $password)
+    {
+        $prepareParamsMethodName = 'prepareSendWelcomeEmail';
         $invokeObjectName        = 'userAdditional';
 
         return $this->prepareParamsAndInvokeCallback->__invoke(
