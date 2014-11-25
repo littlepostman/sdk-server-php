@@ -595,6 +595,25 @@ class Lp_RPC_JSON_LPJSON
 
     /**
      * @param string   $userAuthKey
+     * @param password $email
+     * @param password $password
+     *
+     * @return array
+     */
+    public function prepareSendWelcomeEmail($userAuthKey, $email, $password)
+    {
+        $params = [
+            'userAuthKey' => $userAuthKey,
+            'email'       => $email,
+            'password'    => $password
+        ];
+
+        return $this->prepareUserAuthCall('sendWelcomeEmail', $params);
+    }
+
+
+    /**
+     * @param string   $userAuthKey
      * @param password $password
      *
      * @return array

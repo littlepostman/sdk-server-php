@@ -658,6 +658,23 @@ class Lp_RPC_LPClient
 
     /**
      * @param string $userAuthKey
+     * @param string $email
+     * @param string $password
+     */
+    public function sendWelcomeEmail($userAuthKey, $email, $password)
+    {
+        $prepareParamsMethodName = 'prepareSendWelcomeEmail';
+        $invokeObjectName        = 'userAdditional';
+
+        return $this->prepareParamsAndInvokeCallback->__invoke(
+            $prepareParamsMethodName,
+            $invokeObjectName,
+            func_get_args()
+        );
+    }
+
+    /**
+     * @param string $userAuthKey
      * @param int    $userId
      */
     public function deleteUser($userAuthKey, $userId)
