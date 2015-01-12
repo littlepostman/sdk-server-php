@@ -384,15 +384,15 @@ class Lp_RPC_LPClient
     }
 
     /**
-     * @param Lp_RPC_Model_Message                            $message
-     * @param array|string                                    $type
-     * @param string                                          $env
-     * @param Lp_RPC_Model_FieldSet|Lp_RPC_Model_DeviceFilter $fieldSetOrDeviceFilter
-     * @param bool                                            $inboxOnly
+     * @param Lp_RPC_Model_Message                                  $message
+     * @param array|string                                          $type
+     * @param string                                                $env
+     * @param Lp_RPC_Model_FieldSet|Lp_RPC_Model_DeviceFilter|array $fieldSetOrDeviceFilters
+     * @param bool                                                  $inboxOnly
      *
      * @throws Exception
      */
-    public function pushMessage($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null, $inboxOnly = false)
+    public function pushMessage($message, $type = null, $env = null, $fieldSetOrDeviceFilters = null, $inboxOnly = false)
     {
         $prepareParamsMethodName = 'preparePushSendCall';
         $invokeObjectName        = 'push';

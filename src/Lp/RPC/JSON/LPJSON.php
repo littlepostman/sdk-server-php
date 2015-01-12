@@ -421,15 +421,15 @@ class Lp_RPC_JSON_LPJSON
     }
 
     /**
-     * @param Lp_RPC_Model_Message                            $message
-     * @param array|string                                    $type
-     * @param string                                          $env
-     * @param Lp_RPC_Model_FieldSet|Lp_RPC_Model_DeviceFilter $fieldSetOrDeviceFilter
-     * @param bool                                            $inboxOnly
+     * @param Lp_RPC_Model_Message                                  $message
+     * @param array|string                                          $type
+     * @param string                                                $env
+     * @param Lp_RPC_Model_FieldSet|Lp_RPC_Model_DeviceFilter|array $fieldSetOrDeviceFilters
+     * @param bool                                                  $inboxOnly
      *
      * @return array
      */
-    public function preparePushSendCall($message, $type = null, $env = null, $fieldSetOrDeviceFilter = null, $inboxOnly = false)
+    public function preparePushSendCall($message, $type = null, $env = null, $fieldSetOrDeviceFilters = null, $inboxOnly = false)
     {
         $params              = [];
         $params['message']   = $this->buildPushSendMessageCreateArray($message);
@@ -440,14 +440,22 @@ class Lp_RPC_JSON_LPJSON
         if (!empty($groups)) {
             $params['group'] = $groups;
         }
-        if (!empty($fieldSetOrDeviceFilter)) {
-            switch (get_class($fieldSetOrDeviceFilter)) {
-                case 'Lp_RPC_Model_FieldSet' :
-                    $params['field'] = $fieldSetOrDeviceFilter->getData();
-                    break;
-                case 'Lp_RPC_Model_DeviceFilter' :
-                    $params['filter'] = $fieldSetOrDeviceFilter->getCriteria();
-                    break;
+        if (!empty($fieldSetOrDeviceFilters)) {
+            if (!is_array($fieldSetOrDeviceFilters)) {
+                $fieldSetOrDeviceFilters = [$fieldSetOrDeviceFilters];
+            }
+            foreach ($fieldSetOrDeviceFilters as $fieldSetOrDeviceFilter) {
+                switch (get_class($fieldSetOrDeviceFilter)) {
+                    case 'Lp_RPC_Model_FieldSet' :
+                        $params['field'] = $fieldSetOrDeviceFilter->getData();
+                        break 2;
+                    case 'Lp_RPC_Model_DeviceFilter' :
+                        if (empty($params['filter'])) {
+                            $params['filter'] = [];
+                        }
+                        $params['filter'] = array_merge($params['filter'], $fieldSetOrDeviceFilter->getCriteria());
+                        break;
+                }
             }
         }
 
