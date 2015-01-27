@@ -198,6 +198,11 @@ class Lp_RPC_Model_Statistics
     protected $_invalidDevicesWpTotal;
 
     /**
+     * @var int
+     */
+    protected $_optedOut;
+
+    /**
      * Construct
      *
      * @param array $object
@@ -613,4 +618,11 @@ class Lp_RPC_Model_Statistics
         return ((int) $this->_invalidDevicesWpTotal);
     }
 
+    /**
+     * @return int
+     */
+    public function getOptedOut()
+    {
+        return $this->_optedOut;
+    }
 }
