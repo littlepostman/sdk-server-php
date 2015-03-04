@@ -429,8 +429,12 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function preparePushSendCall($message, $type = null, $env = null, $fieldSetOrDeviceFilters = null, $inboxOnly = false)
-    {
+    public function preparePushSendCall($message,
+        $type = null,
+        $env = null,
+        $fieldSetOrDeviceFilters = null,
+        $inboxOnly = false
+    ) {
         $params              = [];
         $params['message']   = $this->buildPushSendMessageCreateArray($message);
         $params['inboxOnly'] = $inboxOnly;
@@ -453,7 +457,8 @@ class Lp_RPC_JSON_LPJSON
                         if (empty($params['filter'])) {
                             $params['filter'] = [];
                         }
-                        $params['filter'] = array_merge($params['filter'], $fieldSetOrDeviceFilter->getCriteria());
+                        $params['filter'] =
+                            array_merge($params['filter'], $fieldSetOrDeviceFilter->getCriteria());
                         break;
                 }
             }
@@ -672,14 +677,26 @@ class Lp_RPC_JSON_LPJSON
      *
      * @return array
      */
-    public function prepareUpdateAppIOSCert($iOSCertFileContentsBase64, $deviceEnv, $passphrase = '')
-    {
+    public function prepareUpdateAppIOSCert($iOSCertFileContentsBase64,
+        $deviceEnv,
+        $passphrase = ''
+    ) {
         $params                              = [];
         $params['iOSCertFileContentsBase64'] = $iOSCertFileContentsBase64;
         $params['deviceEnv']                 = $deviceEnv;
         $params['passphrase']                = $passphrase;
 
         return $this->prepare('updateAppIOSCert', $params);
+    }
+
+    /**
+     * @return array
+     */
+    public function prepareGetAppIOSCertsDetails()
+    {
+        $params = [];
+
+        return $this->prepare('getAppIOSCertsDetails', $params);
     }
 
     /**
@@ -726,7 +743,9 @@ class Lp_RPC_JSON_LPJSON
                     if (is_array($value)) {
                         $uid         = $value['deviceUid'];
                         $type        = Lp_RPC_Model_DeviceType::getDeviceType($value['deviceType']);
-                        $environment = Lp_RPC_Model_DeviceEnvironment::getDeviceEnvironment($value['deviceEnv']);
+                        $environment =
+                            Lp_RPC_Model_DeviceEnvironment::getDeviceEnvironment($value['deviceEnv']
+                            );
                         $fieldSet    = new Lp_RPC_Model_FieldSet();
                         $data        = $value['data'];
                         foreach ($data as $fieldName => $fieldValue) {
@@ -754,7 +773,10 @@ class Lp_RPC_JSON_LPJSON
                 $list = $object['result']['list'];
                 foreach ($list as $array) {
                     foreach ($array as $value) {
-                        $deviceFilters[] = new Lp_RPC_Model_DeviceFilter($value['id'], $value['name'], $value['criteria']);
+                        $deviceFilters[] = new Lp_RPC_Model_DeviceFilter($value['id'],
+                            $value['name'],
+                            $value['criteria']
+                        );
                     }
                 }
             }
@@ -829,10 +851,12 @@ class Lp_RPC_JSON_LPJSON
                 $list = $object['result']['list'];
                 foreach ($list as $array) {
                     foreach ($array as $value) {
-                        $descriptiveName = !empty($value['descriptiveName']) ? $value['descriptiveName'] : '';
+                        $descriptiveName =
+                            !empty($value['descriptiveName']) ? $value['descriptiveName'] : '';
                         $tagBased        = (bool) ($value['tagBased']);
 
-                        $fields[] = new Lp_RPC_Model_Field($value['name'], $descriptiveName, $tagBased);
+                        $fields[] =
+                            new Lp_RPC_Model_Field($value['name'], $descriptiveName, $tagBased);
                     }
                 }
             }
@@ -958,7 +982,11 @@ class Lp_RPC_JSON_LPJSON
             foreach ($login['apps'] as $app) {
                 if (is_array($app)) {
                     $apps[] =
-                        new Lp_RPC_Model_App(((int) $app['id']), $app['name'], $app['authKeyClient'], $app['authKeyServer']);
+                        new Lp_RPC_Model_App(((int) $app['id']),
+                            $app['name'],
+                            $app['authKeyClient'],
+                            $app['authKeyServer']
+                        );
                 }
             }
         }
@@ -1026,7 +1054,8 @@ class Lp_RPC_JSON_LPJSON
             }
         }
 
-        throw new Exception('Unexpected exception occurred while parsing registerCustomer result', 0);
+        throw new Exception('Unexpected exception occurred while parsing registerCustomer result', 0
+        );
     }
 
 
