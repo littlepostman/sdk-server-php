@@ -18,7 +18,7 @@ class Lp_RPC_LPClient
     /**
      * @const LP_API_VERSION
      */
-    const LP_API_VERSION = '1.0.50';
+    const LP_API_VERSION = '1.0.51';
 
     /**
      * @const bool DEBUG_MODE
@@ -253,11 +253,15 @@ class Lp_RPC_LPClient
         if (!empty($deviceFilterOrArrayOfDeviceFilters)) {
             try {
 
-                $params = $this->_jsonHandler->prepareDeviceFilterCalcCriteriaCall($deviceFilterOrArrayOfDeviceFilters);
+                $params =
+                    $this->_jsonHandler->prepareDeviceFilterCalcCriteriaCall($deviceFilterOrArrayOfDeviceFilters
+                    );
                 $result = $this->_invoke('deviceFilter', [$params]);
                 $this->_validate($result);
 
-                return $this->_jsonHandler->parseDeviceFilterCalcCriteriaResult($deviceFilterOrArrayOfDeviceFilters, $result);
+                return $this->_jsonHandler->parseDeviceFilterCalcCriteriaResult($deviceFilterOrArrayOfDeviceFilters,
+                    $result
+                );
             } catch (Exception $e) {
                 throw new Exception(self::EXCEPTION_TEXT, 0, $e);
             }
@@ -392,8 +396,12 @@ class Lp_RPC_LPClient
      *
      * @throws Exception
      */
-    public function pushMessage($message, $type = null, $env = null, $fieldSetOrDeviceFilters = null, $inboxOnly = false)
-    {
+    public function pushMessage($message,
+        $type = null,
+        $env = null,
+        $fieldSetOrDeviceFilters = null,
+        $inboxOnly = false
+    ) {
         $prepareParamsMethodName = 'preparePushSendCall';
         $invokeObjectName        = 'push';
 
@@ -716,6 +724,23 @@ class Lp_RPC_LPClient
     public function updateAppIOSCert($iOSCertFileContentsBase64, $deviceEnv, $passphrase = '')
     {
         $prepareParamsMethodName = 'prepareUpdateAppIOSCert';
+        $invokeObjectName        = 'appCredentials';
+
+        return $this->prepareParamsAndInvokeCallback->__invoke(
+            $prepareParamsMethodName,
+            $invokeObjectName,
+            func_get_args()
+        );
+    }
+
+    /**
+     * @param int $appId
+     *
+     * @return array
+     */
+    public function getAppIOSCertsDetails()
+    {
+        $prepareParamsMethodName = 'prepare' . ucfirst(__FUNCTION__);
         $invokeObjectName        = 'appCredentials';
 
         return $this->prepareParamsAndInvokeCallback->__invoke(
