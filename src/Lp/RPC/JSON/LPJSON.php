@@ -379,6 +379,7 @@ class Lp_RPC_JSON_LPJSON
             'iosExpiry'             => $messageDetails->getIosExpiry(),
             'iosAlert'              => $messageDetails->getIosAlert(),
             'iosBadge'              => $messageDetails->getIosBadge(),
+            'iosContentAvailable'   => $messageDetails->getIosContentAvailable(),
             'iosSound'              => $messageDetails->getIosSound(),
             'iosData'               => $messageDetails->getIosData(),
             'androidTimeToLive'     => $messageDetails->getAndroidTimeToLive(),
@@ -901,6 +902,7 @@ class Lp_RPC_JSON_LPJSON
                 $messages[$messageIndex]->setIosExpiry($array['iosExpiry']);
                 $messages[$messageIndex]->setIosAlert($array['iosAlert']);
                 $messages[$messageIndex]->setIosBadge($array['iosBadge']);
+                $messages[$messageIndex]->setIosContentAvailable($array['iosContentAvailable']);
                 $messages[$messageIndex]->setIosSound($array['iosSound']);
                 $messages[$messageIndex]->setIosData($array['iosData']);
                 $messages[$messageIndex]->setAndroidTimeToLive($array['androidTimeToLive']);
@@ -1136,6 +1138,9 @@ class Lp_RPC_JSON_LPJSON
         }
         if (!is_null($message->getIosBadge())) {
             $array['iosBadge'] = $message->getIosBadge();
+        }
+        if (!is_null($message->getIosContentAvailable())) {
+            $array['iosContentAvailable'] = $message->getIosContentAvailable();
         }
         if (!is_null($message->getIosSound())) {
             $array['iosSound'] = $message->getIosSound();

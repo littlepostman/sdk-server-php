@@ -45,6 +45,11 @@ class Lp_RPC_Model_Message
      */
     protected $_iosBadge;
 
+    /*
+     * @var int $iosContentAvailable
+     */
+    protected $iosContentAvailable;
+
     /**
      * @var string $_iosSound
      */
@@ -239,6 +244,22 @@ class Lp_RPC_Model_Message
     public function getIosBadge ()
     {
         return $this->_iosBadge;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIosContentAvailable()
+    {
+        return $this->iosContentAvailable;
+    }
+
+    /**
+     * @param mixed $iosContentAvailable
+     */
+    public function setIosContentAvailable($iosContentAvailable)
+    {
+        $this->iosContentAvailable = $iosContentAvailable;
     }
 
     /**
