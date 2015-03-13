@@ -38,6 +38,7 @@ class Lp_RPC_Model_MessageDetails
     private $iosExpiry;
     private $iosAlert;
     private $iosBadge;
+    private $iosContentAvailable;
     private $iosSound;
     private $iosData;
     private $androidTimeToLive;
@@ -203,6 +204,22 @@ class Lp_RPC_Model_MessageDetails
     public function setIosBadge($iosBadge)
     {
         $this->iosBadge = $iosBadge;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIosContentAvailable()
+    {
+        return $this->iosContentAvailable;
+    }
+
+    /**
+     * @param mixed $iosContentAvailable
+     */
+    public function setIosContentAvailable($iosContentAvailable)
+    {
+        $this->iosContentAvailable = $iosContentAvailable;
     }
 
     /**
