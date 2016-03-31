@@ -8,7 +8,7 @@
 class Lp_RPC_Model_Message
 {
 
-    const MESSAGE_MAX_LENGTH = 140;
+    const MESSAGE_MAX_LENGTH = 512;
 
     /**
      * @var string $_content
